@@ -9,6 +9,8 @@ type Props = {
   size?: number;
   /** desenha o anel (pathLength 0→1) na entrada */
   animateRing?: boolean;
+  /** anel lime parcial em volta da foto (padrão true) */
+  ring?: boolean;
 };
 
 function initials(name: string) {
@@ -27,9 +29,10 @@ export default function Avatar({
   photo,
   size = 56,
   animateRing = false,
+  ring = true,
 }: Props) {
   const stroke = Math.max(2, Math.round(size / 24));
-  const pad = stroke + 3;
+  const pad = ring ? stroke + 3 : 0;
   const r = (size - stroke) / 2;
 
   return (
@@ -38,6 +41,7 @@ export default function Avatar({
       style={{ width: size, height: size }}
       aria-label={name}
     >
+      {ring && (
       <svg
         className="absolute inset-0 -rotate-45"
         width={size}
@@ -72,6 +76,7 @@ export default function Avatar({
           />
         )}
       </svg>
+      )}
       <div
         className="absolute overflow-hidden rounded-full bg-ink-deep"
         style={{ inset: pad }}

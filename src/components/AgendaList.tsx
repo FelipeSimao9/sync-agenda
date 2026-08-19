@@ -143,8 +143,12 @@ export default function AgendaList({ blocks, eventState, nowMs, onOpen }: Props)
                   <div className="flex shrink-0 items-start">
                     <div className="flex">
                       {b.block.speakers.slice(0, 4).map((s, i) => (
-                        <div key={s.name} style={{ marginLeft: i === 0 ? 0 : -8 }}>
-                          <Avatar name={s.name} photo={s.photo} size={30} />
+                        <div
+                          key={s.name}
+                          className="rounded-full border-2 border-ink"
+                          style={{ marginLeft: i === 0 ? 0 : -8 }}
+                        >
+                          <Avatar name={s.name} photo={s.photo} size={30} ring={false} />
                         </div>
                       ))}
                     </div>

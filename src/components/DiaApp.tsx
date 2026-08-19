@@ -170,26 +170,15 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
                 </>
               )}
             </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.25 }}
-              className="mt-4 text-[15px] text-mist"
-            >
-              Sábado, 22 de agosto · 08h00–18h30
-              <br />
-              iFood HQ, São Paulo
-            </motion.p>
           </div>
-          <FirstBlockCard withMenu={false} onOpen={setSheetBlock} />
           <motion.button
             type="button"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: EASE, delay: 0.45 }}
+            transition={{ duration: 0.45, ease: EASE, delay: 0.35 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setShowProgram(true)}
-            className="-mt-2 flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-7 text-[15px] font-semibold text-cream backdrop-blur-xl"
+            className="flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-7 text-[15px] font-semibold text-cream backdrop-blur-xl"
           >
             <ListOrdered size={17} strokeWidth={1.75} className="text-lime" />
             Ver programação

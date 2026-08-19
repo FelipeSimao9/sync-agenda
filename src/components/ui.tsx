@@ -40,6 +40,32 @@ export function SafeImg({
   );
 }
 
+/** Logo oficial do Sync (ícone + wordmark), com fallback em texto. */
+export function SyncLogo({
+  height = 28,
+  className = "",
+}: {
+  height?: number;
+  className?: string;
+}) {
+  return (
+    <SafeImg
+      src="/brand/icon-sync.svg"
+      alt="Sync"
+      className={`object-contain ${className}`}
+      style={{ height }}
+      fallback={
+        <span
+          className="font-bold lowercase tracking-tight text-lime"
+          style={{ fontSize: height * 0.85, lineHeight: 1 }}
+        >
+          sync
+        </span>
+      }
+    />
+  );
+}
+
 /** Número que anima ao mudar (400ms), com dígitos tabulares. */
 export function AnimNumber({ value }: { value: number }) {
   const [display, setDisplay] = useState(value);

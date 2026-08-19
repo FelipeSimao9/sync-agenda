@@ -18,7 +18,7 @@ import AgendaList from "./AgendaList";
 import BlockSheet from "./BlockSheet";
 import NowScreen from "./NowScreen";
 import TabBar, { type Tab } from "./TabBar";
-import { AnimNumber, EASE, PrimaryButton, SafeImg } from "./ui";
+import { AnimNumber, EASE, PrimaryButton, SafeImg, SyncLogo } from "./ui";
 
 function EventPhoto() {
   return (
@@ -133,14 +133,14 @@ function DiaAppInner({ firstName, choice1, choice2, allowTimeOverride }: Props) 
       return (
         <div className="flex h-dvh flex-col items-center justify-center gap-8 px-8 text-center">
           <div>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: EASE }}
-              className="eyebrow"
+              className="flex justify-center"
             >
-              SYNC 2026
-            </motion.p>
+              <SyncLogo height={32} />
+            </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}

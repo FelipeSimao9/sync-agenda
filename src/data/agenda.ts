@@ -212,7 +212,7 @@ export const AGENDA: AgendaBlock[] = [
     speakers: [],
     menu: [
       {
-        title: "Almoço · poke individual",
+        title: "Poke individual",
         note: "Três sabores à escolha",
         items: [
           "Salmão (arroz de sushi, salmão, abacate, sunomono, edamame, nori, shoyu)",

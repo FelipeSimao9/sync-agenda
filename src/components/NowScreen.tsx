@@ -14,7 +14,7 @@ import {
   type FocusKind,
 } from "@/lib/time";
 import Avatar from "./Avatar";
-import { EASE } from "./ui";
+import { EASE, SyncLogo } from "./ui";
 
 function eyebrowFor(kind: FocusKind, block: EffectiveBlock, nowMs: number) {
   if (kind === "current") return "Acontecendo agora";
@@ -221,6 +221,14 @@ export default function NowScreen({ blocks, nowMs, onOpen }: Props) {
 
   return (
     <div className="flex h-dvh flex-col px-6 pt-[max(1.5rem,env(safe-area-inset-top))]">
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: EASE }}
+        className="flex shrink-0 justify-center pb-3"
+      >
+        <SyncLogo height={26} />
+      </motion.div>
       <div className="min-h-0 flex-1">
         <AnimatePresence mode="wait">
           <motion.div

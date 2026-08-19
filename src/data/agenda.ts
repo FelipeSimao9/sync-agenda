@@ -225,7 +225,7 @@ export const AGENDA: AgendaBlock[] = [
         note: "Três sabores à escolha",
         items: [
           "Salmão (arroz de sushi, salmão, abacate, sunomono, edamame, nori, shoyu)",
-          "Frango grelhado (arroz de sushi, cubos de frango grelhado, sunomono, edamame, nori, shoyu)",
+          "Frango empanado (arroz, frango empanado, molho de pimenta)",
           "Cogumelos — vegetariano (arroz de sushi, mix de cogumelos, sunomono, edamame, nori, shoyu)",
         ],
       },
@@ -390,7 +390,9 @@ export const AGENDA: AgendaBlock[] = [
     end: "18:00",
     title: "Anúncio do pódio do pitch",
     room: "IA House",
-    speakers: [],
+    speakers: [
+      { name: "Luana Daud", photo: "/speakers/luana-daud.png" },
+    ],
     description:
       "O resultado das Pitch Sessions da manhã: as startups vencedoras de MVP e Seed + Pré-seed sobem ao palco.",
   },

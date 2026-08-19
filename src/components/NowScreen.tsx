@@ -22,7 +22,7 @@ function eyebrowFor(kind: FocusKind, block: EffectiveBlock, nowMs: number) {
   return `A seguir · começa em ${mins} min`;
 }
 
-function MenuArea({ block }: { block: AgendaBlock }) {
+export function MenuArea({ block }: { block: AgendaBlock }) {
   const section = block.menu?.[0];
   if (!section) return null;
   const isLunch = block.id === "almoco";

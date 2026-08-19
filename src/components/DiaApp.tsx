@@ -3,7 +3,7 @@
 import { Suspense, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, MapPin } from "lucide-react";
+import { CalendarDays, ListOrdered, MapPin } from "lucide-react";
 import { blockById, type AgendaBlock, AGENDA } from "@/data/agenda";
 import {
   buildEffectiveAgenda,
@@ -19,6 +19,7 @@ import BlockSheet from "./BlockSheet";
 import NowScreen from "./NowScreen";
 import TabBar, { TAB_ORDER, type Tab } from "./TabBar";
 import TicketsScreen from "./TicketsScreen";
+import ProgramWalkthrough from "./ProgramWalkthrough";
 import { AnimNumber, EASE, PrimaryButton, SafeImg, SyncLogo } from "./ui";
 
 function EventPhoto() {
@@ -94,6 +95,7 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
 
   const [tab, setTab] = useState<Tab>("agora");
   const [sheetBlock, setSheetBlock] = useState<AgendaBlock | null>(null);
+  const [showProgram, setShowProgram] = useState(false);
   const touch = useRef<{ x: number; y: number } | null>(null);
 
   const state = getEventState(now);
@@ -180,6 +182,18 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
             </motion.p>
           </div>
           <FirstBlockCard withMenu={false} onOpen={setSheetBlock} />
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: EASE, delay: 0.45 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setShowProgram(true)}
+            className="-mt-2 flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-7 text-[15px] font-semibold text-cream backdrop-blur-xl"
+          >
+            <ListOrdered size={17} strokeWidth={1.75} className="text-lime" />
+            Ver programação
+          </motion.button>
         </div>
       );
     }
@@ -299,6 +313,15 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
       </AnimatePresence>
 
       <TabBar tab={tab} onChange={setTab} />
+
+      <AnimatePresence>
+        {showProgram && (
+          <ProgramWalkthrough
+            blocks={effective}
+            onClose={() => setShowProgram(false)}
+          />
+        )}
+      </AnimatePresence>
 
       <BlockSheet
         block={sheetBlock}

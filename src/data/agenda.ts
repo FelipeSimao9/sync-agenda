@@ -3,6 +3,7 @@ export type Speaker = {
   role?: string;
   company?: string;
   photo?: string;
+  linkedin?: string;
   isModerator?: boolean;
 };
 
@@ -64,9 +65,9 @@ export const AGENDA: AgendaBlock[] = [
     subtitle: "Por que estamos aqui? Agenda do dia",
     room: "IA House",
     speakers: [
-      { name: "Silvia", photo: "/speakers/silvia.jpeg" },
-      { name: "Davi Basã", photo: "/speakers/davi-basa.png" },
-      { name: "Alice", photo: "/speakers/alice.png" },
+      { name: "Silvia", photo: "/speakers/silvia.jpeg", linkedin: "https://www.linkedin.com/in/silviakihara/" },
+      { name: "Davi Basã", photo: "/speakers/davi-basa.png", linkedin: "https://www.linkedin.com/in/davi-basa/" },
+      { name: "Alice", photo: "/speakers/alice.png", linkedin: "https://www.linkedin.com/in/alicedevens/" },
     ],
     description:
       "O ponto de partida do dia: o que é o Sync, por que ele existe e o que esperar das próximas horas, com a fala do patrocínio âncora.",
@@ -97,24 +98,28 @@ export const AGENDA: AgendaBlock[] = [
         role: "CEO & Founder",
         company: "Mevo",
         photo: "/speakers/pedro-dias.png",
+        linkedin: "https://www.linkedin.com/in/ppd200/",
       },
       {
         name: "Fábio Rodas",
         role: "CEO & Co-Founder",
         company: "Shopper",
         photo: "/speakers/fabio-rodas.png",
+        linkedin: "https://www.linkedin.com/in/fabiorodas/",
       },
       {
         name: "Lucas Montez",
         role: "Senior Director",
         company: "iFood",
         photo: "/speakers/lucas-montez.png",
+        linkedin: "https://www.linkedin.com/in/lucas-montez-135b25161/",
       },
       {
         name: "Jackellyne Santana",
         role: "Head de M&A",
         company: "iFood",
         photo: "/speakers/jackellyne-santana.png",
+        linkedin: "https://www.linkedin.com/in/jackellynesantana/",
         isModerator: true,
       },
     ],
@@ -136,11 +141,13 @@ export const AGENDA: AgendaBlock[] = [
         name: "Rodrigo Terron",
         company: "NewHack",
         photo: "/speakers/rodrigo-terron.png",
+        linkedin: "https://www.linkedin.com/in/rodrigoterron/",
       },
       {
         name: "Daniella Quelho",
         company: "Endeavor",
         photo: "/speakers/daniella-quelho.png",
+        linkedin: "https://www.linkedin.com/in/daniella-quelho-e-correa-de-mello-16b0b05/",
       },
     ],
     description:
@@ -157,16 +164,18 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Guacamole",
     capacity: 70,
     speakers: [
-      { name: "Jose", company: "Valor Capital", photo: "/speakers/jose-noblecilla.png" },
+      { name: "Jose", company: "Valor Capital", photo: "/speakers/jose-noblecilla.png", linkedin: "https://www.linkedin.com/in/josemnb/" },
       {
         name: "Diego Zancaneli",
         company: "Pax",
         photo: "/speakers/diego-zacaneli.png",
+        linkedin: "https://www.linkedin.com/in/diegozancaneli/",
       },
       {
         name: "Sofia Brandão",
         company: "Inteli",
         photo: "/speakers/sofia-brandao.png",
+        linkedin: "https://www.linkedin.com/in/sofia-farias-brand%C3%A3o/",
         isModerator: true,
       },
     ],
@@ -232,12 +241,13 @@ export const AGENDA: AgendaBlock[] = [
     subtitle: "Empreendendo na nova era das startups",
     room: "IA House",
     speakers: [
-      { name: "Jose", company: "Vetto AI", photo: "/speakers/jose-andre.png" },
-      { name: "Zen", company: "Vetto AI", photo: "/speakers/zen.png" },
+      { name: "Jose", company: "Vetto AI", photo: "/speakers/jose-andre.png", linkedin: "https://www.linkedin.com/in/jose-andrenunes/" },
+      { name: "Zen", company: "Vetto AI", photo: "/speakers/zen.png", linkedin: "https://www.linkedin.com/in/matheuszensantoro/" },
       {
         name: "Natasha Fujito",
         company: "ITA",
         photo: "/speakers/natasha-fujito.png",
+        linkedin: "https://www.linkedin.com/in/natasha-fujito-951513409/",
         isModerator: true,
       },
     ],
@@ -253,10 +263,11 @@ export const AGENDA: AgendaBlock[] = [
     title: "Painel: Traços de um empreendedor",
     room: "IA House",
     speakers: [
-      { name: "Veronica Serra", photo: "/speakers/veronica-serra.png" },
+      { name: "Veronica Serra", photo: "/speakers/veronica-serra.png", linkedin: "https://www.linkedin.com/in/veronica-allende-serra-a90a6/" },
       {
         name: "Davi Basa",
         photo: "/speakers/davi-basa.png",
+        linkedin: "https://www.linkedin.com/in/davi-basa/",
         isModerator: true,
       },
     ],
@@ -274,21 +285,24 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Sonho Grande",
     capacity: 40,
     speakers: [
-      { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus-arruda.png" },
+      { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus-arruda.png", linkedin: "https://www.linkedin.com/in/petrusarruda/" },
       {
         name: "Fred Amaral",
         company: "Lerian",
         photo: "/speakers/fred-amaral.png",
+        linkedin: "https://www.linkedin.com/in/fredcamaral/",
       },
       {
         name: "Pedro Braz",
         company: "Credituz",
         photo: "/speakers/pedro-braz.png",
+        linkedin: "https://www.linkedin.com/in/pedrohbraz/",
       },
       {
         name: "Marcelo Gobato",
         company: "Monashees",
         photo: "/speakers/marcelo-gobato.png",
+        linkedin: "https://www.linkedin.com/in/marcelo-gobato-475783a3/",
         isModerator: true,
       },
     ],
@@ -306,12 +320,13 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Arroz Integral",
     capacity: 60,
     speakers: [
-      { name: "Pedro", company: "Vereda", photo: "/speakers/pedro-galindo.png" },
-      { name: "Flavio", company: "Revert", photo: "/speakers/flavio-terni.png" },
+      { name: "Pedro", company: "Vereda", photo: "/speakers/pedro-galindo.png", linkedin: "https://www.linkedin.com/in/pedro-galindo-022a41197/" },
+      { name: "Flavio", company: "Revert", photo: "/speakers/flavio-terni.png", linkedin: "https://www.linkedin.com/in/flavioterni/" },
       {
         name: "Rayssa",
         company: "GV",
         photo: "/speakers/rayssa.png",
+        linkedin: "https://www.linkedin.com/in/rayssagutierrez/",
         isModerator: true,
       },
     ],
@@ -354,11 +369,13 @@ export const AGENDA: AgendaBlock[] = [
         name: "Fernando Gadotti",
         company: "Tako",
         photo: "/speakers/fernando-gadotti.png",
+        linkedin: "https://www.linkedin.com/in/fgadotti/",
       },
       {
         name: "Davi Abreu",
         company: "Inteli",
         photo: "/speakers/davi-abreu.png",
+        linkedin: "https://www.linkedin.com/in/davi-abreu-da-silveira/",
         isModerator: true,
       },
     ],
@@ -386,8 +403,8 @@ export const AGENDA: AgendaBlock[] = [
     title: "Fechamento",
     room: "IA House",
     speakers: [
-      { name: "Breno", photo: "/speakers/breno.jpeg" },
-      { name: "Alice", photo: "/speakers/alice.png" },
+      { name: "Breno", photo: "/speakers/breno.jpeg", linkedin: "https://www.linkedin.com/in/brenodesc/" },
+      { name: "Alice", photo: "/speakers/alice.png", linkedin: "https://www.linkedin.com/in/alicedevens/" },
     ],
     description:
       "O encerramento oficial do Sync 2026: os destaques do dia e o que vem depois do evento.",

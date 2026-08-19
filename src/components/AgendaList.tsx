@@ -62,9 +62,7 @@ export default function AgendaList({ blocks, eventState, nowMs, onOpen }: Props)
 
   return (
     <div className="mx-auto min-h-dvh max-w-[480px] pb-36">
-      <header className="sticky top-0 z-30 bg-ink/80 px-6 pb-3 pt-[max(1.25rem,env(safe-area-inset-top))] backdrop-blur-xl">
-        <p className="eyebrow">Sábado, 22 de agosto</p>
-      </header>
+      <div className="pt-[max(1.25rem,env(safe-area-inset-top))]" />
 
       <motion.div
         initial="hidden"

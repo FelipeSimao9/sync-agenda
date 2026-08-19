@@ -5,6 +5,7 @@ import { CalendarPlus, Clock, ExternalLink, MapPin } from "lucide-react";
 import type { AgendaBlock } from "@/data/agenda";
 import { googleCalendarUrl } from "@/lib/gcal";
 import Avatar from "./Avatar";
+import { SafeImg } from "./ui";
 
 type Props = {
   block: AgendaBlock | null;
@@ -103,10 +104,30 @@ export default function BlockSheet({ block, registered, onClose }: Props) {
                     <div key={s.name} className="flex items-center gap-3">
                       <Avatar name={s.name} photo={s.photo} size={48} />
                       <div>
-                        <p className="text-[15px] font-semibold text-cream">
+                        <p className="flex flex-wrap items-center gap-x-2 text-[15px] font-semibold text-cream">
                           {s.name}
+                          {s.linkedin && (
+                            <a
+                              href={s.linkedin}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label={`LinkedIn de ${s.name}`}
+                              className="inline-flex shrink-0 items-center opacity-80 transition-opacity hover:opacity-100"
+                            >
+                              <SafeImg
+                                src="/brand/linkedin.svg"
+                                className="h-4 w-4 rounded-[3px]"
+                                fallback={
+                                  <span className="flex h-4 w-4 items-center justify-center rounded-[3px] bg-[#007EBB] text-[9px] font-bold lowercase text-white">
+                                    in
+                                  </span>
+                                }
+                              />
+                            </a>
+                          )}
                           {s.isModerator && (
-                            <span className="ml-2 rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-mist">
+                            <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-mist">
                               Mediador(a)
                             </span>
                           )}

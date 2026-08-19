@@ -43,7 +43,7 @@ export default function Avatar({
     >
       {ring && (
       <svg
-        className="absolute inset-0 -rotate-45"
+        className="absolute inset-0"
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
@@ -59,7 +59,7 @@ export default function Avatar({
             strokeWidth={stroke}
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 0.75, opacity: 1 }}
+            animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           />
         ) : (
@@ -71,8 +71,6 @@ export default function Avatar({
             stroke="#E5F27E"
             strokeWidth={stroke}
             strokeLinecap="round"
-            strokeDasharray="0.75 0.25"
-            pathLength={1}
           />
         )}
       </svg>

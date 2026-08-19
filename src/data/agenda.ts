@@ -391,7 +391,11 @@ export const AGENDA: AgendaBlock[] = [
     title: "Anúncio do pódio do pitch",
     room: "IA House",
     speakers: [
-      { name: "Luana Daud", photo: "/speakers/luana-daud.png" },
+      {
+        name: "Luana Daud",
+        photo: "/speakers/luana-daud.png",
+        linkedin: "https://www.linkedin.com/in/luana-daud-ba9288110/",
+      },
     ],
     description:
       "O resultado das Pitch Sessions da manhã: as startups vencedoras de MVP e Seed + Pré-seed sobem ao palco.",

@@ -14,13 +14,21 @@ config();
 
 import { createClient } from "@supabase/supabase-js";
 
-const FULL_SESSIONS = [
+const ALL_SESSIONS = [
   { id: "track-ecossistemas", slot: 1 },
   { id: "track-produtos-ia", slot: 1 },
   { id: "track-pitch-mvp", slot: 1 },
   { id: "track-pitch-seed", slot: 1 },
   { id: "track-fintech", slot: 2 },
+  { id: "track-early-stage", slot: 2 },
 ];
+
+// ids passados na linha de comando escolhem quais lotar; sem args, lota
+// o slot 1 inteiro + fintech. Ex.: npm run seed:lotacao -- track-produtos-ia
+const requested = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+const FULL_SESSIONS = requested.length
+  ? ALL_SESSIONS.filter((s) => requested.includes(s.id))
+  : ALL_SESSIONS.filter((s) => s.id !== "track-early-stage");
 
 async function main() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

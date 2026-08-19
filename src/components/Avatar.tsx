@@ -1,0 +1,100 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+type Props = {
+  name: string;
+  photo?: string;
+  size?: number;
+  /** desenha o anel (pathLength 0→1) na entrada */
+  animateRing?: boolean;
+};
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
+
+/**
+ * Avatar circular com anel `lime` parcial (~270°) — citação direta das artes
+ * do evento. Foto ausente ou quebrada cai em iniciais lime sobre ink-deep.
+ */
+export default function Avatar({
+  name,
+  photo,
+  size = 56,
+  animateRing = false,
+}: Props) {
+  const [broken, setBroken] = useState(false);
+  const showPhoto = photo && !broken;
+  const stroke = Math.max(2, Math.round(size / 24));
+  const pad = stroke + 3;
+  const r = (size - stroke) / 2;
+
+  return (
+    <div
+      className="relative shrink-0"
+      style={{ width: size, height: size }}
+      aria-label={name}
+    >
+      <svg
+        className="absolute inset-0 -rotate-45"
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        aria-hidden
+      >
+        {animateRing ? (
+          <motion.circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="#E5F27E"
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 0.75, opacity: 1 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          />
+        ) : (
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="#E5F27E"
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray="0.75 0.25"
+            pathLength={1}
+          />
+        )}
+      </svg>
+      <div
+        className="absolute overflow-hidden rounded-full bg-ink-deep"
+        style={{ inset: pad }}
+      >
+        {showPhoto ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photo}
+            alt={name}
+            className="h-full w-full object-cover"
+            onError={() => setBroken(true)}
+          />
+        ) : (
+          <div
+            className="flex h-full w-full items-center justify-center font-bold text-lime"
+            style={{ fontSize: Math.max(11, size * 0.28) }}
+          >
+            {initials(name)}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

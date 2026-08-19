@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink: #18212b;
+  --color-ink-deep: #0c1015;
+  --color-lime: #e5f27e;
+  --color-cream: #f7f3e8;
+  --color-mist: #b7bacc;
+  --color-cold: #8fa0b8;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* inputs a 16px para não dar zoom no iOS */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-mist);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Fundo vivo: blobs ---- */
+@keyframes blob-a {
+  from {
+    transform: translate(-12%, -8%) scale(1);
+  }
+  to {
+    transform: translate(14%, 12%) scale(1.25);
+  }
+}
+@keyframes blob-b {
+  from {
+    transform: translate(10%, 14%) scale(1.15);
+  }
+  to {
+    transform: translate(-14%, -10%) scale(0.9);
+  }
+}
+@keyframes blob-c {
+  from {
+    transform: translate(6%, -12%) scale(0.95);
+  }
+  to {
+    transform: translate(-10%, 10%) scale(1.2);
+  }
+}
+@keyframes blob-d {
+  from {
+    transform: translate(-8%, 10%) scale(1.1);
+  }
+  to {
+    transform: translate(12%, -12%) scale(0.9);
+  }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  will-change: transform;
+}
+.blob-a {
+  animation: blob-a 22s ease-in-out infinite alternate;
+}
+.blob-b {
+  animation: blob-b 27s ease-in-out infinite alternate;
+  animation-delay: -8s;
+}
+.blob-c {
+  animation: blob-c 19s ease-in-out infinite alternate;
+  animation-delay: -14s;
+}
+.blob-d {
+  animation: blob-d 30s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+}
+
+/* esconde scrollbar dos carrosséis horizontais */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ponto pulsando do bloco atual na agenda */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.75);
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot {
+    animation: none;
+  }
 }

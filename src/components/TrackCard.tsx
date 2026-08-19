@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { Check, MapPin } from "lucide-react";
 import type { AgendaBlock, Speaker } from "@/data/agenda";
-import Avatar from "./Avatar";
 import { AnimNumber, EASE, SafeImg } from "./ui";
 
 function PhotoTile({ speaker }: { speaker: Speaker }) {
@@ -102,28 +101,9 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
         </h3>
         <p className="text-[13px] leading-snug text-mist">{block.title}</p>
         {block.description && (
-          <p className="text-[14px] leading-snug text-cream/85">
+          <p className="line-clamp-5 text-[14px] leading-snug text-cream/85">
             {block.description}
           </p>
-        )}
-
-        {block.speakers.length > 0 && (
-          <div className="mt-1 flex flex-col gap-2">
-            {block.speakers.map((s) => (
-              <span
-                key={s.name}
-                className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] py-1 pl-1 pr-3"
-              >
-                <Avatar name={s.name} photo={s.photo} size={26} />
-                <span className="text-[12px] text-cream">
-                  {s.name}
-                  {s.company && (
-                    <span className="text-mist"> · {s.company}</span>
-                  )}
-                </span>
-              </span>
-            ))}
-          </div>
         )}
 
         <div className="mt-auto pt-2">

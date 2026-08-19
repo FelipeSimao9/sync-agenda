@@ -76,7 +76,7 @@ export default function EntrarPage() {
               : "mb-6 text-[22px] font-bold leading-tight"
           }
         >
-          {step === "email" ? "Quem é você?" : "Quase lá."}
+          {step === "email" ? "Preencha seu email" : "Quase lá."}
         </motion.h1>
 
         <motion.div layout>

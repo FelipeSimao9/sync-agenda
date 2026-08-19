@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Radio, CalendarDays } from "lucide-react";
+import { Radio, CalendarDays, Ticket } from "lucide-react";
 
-export type Tab = "agora" | "agenda";
+export type Tab = "ingressos" | "agora" | "agenda";
+export const TAB_ORDER: Tab[] = ["ingressos", "agora", "agenda"];
 
 export default function TabBar({
   tab,
@@ -13,6 +14,7 @@ export default function TabBar({
   onChange: (t: Tab) => void;
 }) {
   const items: { id: Tab; label: string; icon: typeof Radio }[] = [
+    { id: "ingressos", label: "Ingressos", icon: Ticket },
     { id: "agora", label: "Agora", icon: Radio },
     { id: "agenda", label: "Agenda", icon: CalendarDays },
   ];
@@ -31,7 +33,7 @@ export default function TabBar({
               type="button"
               whileTap={{ scale: 0.95 }}
               onClick={() => onChange(item.id)}
-              className={`relative flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-semibold transition-colors ${
+              className={`relative flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[13.5px] font-semibold transition-colors ${
                 active ? "text-ink-deep" : "text-mist"
               }`}
             >

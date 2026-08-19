@@ -17,7 +17,8 @@ import LivingBackground from "./LivingBackground";
 import AgendaList from "./AgendaList";
 import BlockSheet from "./BlockSheet";
 import NowScreen from "./NowScreen";
-import TabBar, { type Tab } from "./TabBar";
+import TabBar, { TAB_ORDER, type Tab } from "./TabBar";
+import TicketsScreen from "./TicketsScreen";
 import { AnimNumber, EASE, PrimaryButton, SafeImg, SyncLogo } from "./ui";
 
 function EventPhoto() {
@@ -77,12 +78,13 @@ function FirstBlockCard({
 
 type Props = {
   firstName: string;
+  lastName: string;
   choice1: string | null;
   choice2: string | null;
   allowTimeOverride: boolean;
 };
 
-function DiaAppInner({ firstName, choice1, choice2, allowTimeOverride }: Props) {
+function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride }: Props) {
   const params = useSearchParams();
   const override = allowTimeOverride
     ? parseNowOverride(params.get("now"))
@@ -107,6 +109,13 @@ function DiaAppInner({ firstName, choice1, choice2, allowTimeOverride }: Props) 
     () => new Set([choice1, choice2].filter(Boolean) as string[]),
     [choice1, choice2],
   );
+  const tickets = useMemo(
+    () =>
+      [choice1, choice2]
+        .map((id) => (id ? blockById(id) : null))
+        .filter(Boolean) as AgendaBlock[],
+    [choice1, choice2],
+  );
 
   const bgIntensity =
     tab === "agora" && state !== "live" ? ("high" as const) : ("low" as const);
@@ -120,7 +129,9 @@ function DiaAppInner({ firstName, choice1, choice2, allowTimeOverride }: Props) 
     const dy = e.changedTouches[0].clientY - touch.current.y;
     touch.current = null;
     if (Math.abs(dx) > 64 && Math.abs(dx) > Math.abs(dy) * 1.6) {
-      setTab(dx < 0 ? "agenda" : "agora");
+      const idx = TAB_ORDER.indexOf(tab);
+      const next = TAB_ORDER[idx + (dx < 0 ? 1 : -1)];
+      if (next) setTab(next);
     }
   }
 
@@ -263,12 +274,18 @@ function DiaAppInner({ firstName, choice1, choice2, allowTimeOverride }: Props) 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={tab}
-          initial={{ opacity: 0, x: tab === "agenda" ? 40 : -40 }}
+          initial={{ opacity: 0, x: tab === "ingressos" ? -40 : 40 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: tab === "agora" ? -40 : 40 }}
+          exit={{ opacity: 0, x: tab === "ingressos" ? -40 : 40 }}
           transition={{ duration: 0.3, ease: EASE }}
         >
-          {tab === "agora" ? (
+          {tab === "ingressos" ? (
+            <TicketsScreen
+              firstName={firstName}
+              lastName={lastName}
+              tickets={tickets}
+            />
+          ) : tab === "agora" ? (
             agora
           ) : (
             <AgendaList

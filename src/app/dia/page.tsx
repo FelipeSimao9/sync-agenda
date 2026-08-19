@@ -10,6 +10,7 @@ export default async function DiaPage() {
   if (!email) redirect("/");
 
   let firstName = "";
+  let lastName = "";
   let choice1: string | null = null;
   let choice2: string | null = null;
   try {
@@ -17,7 +18,7 @@ export default async function DiaPage() {
     const [{ data: participant }, { data: regs }] = await Promise.all([
       supabase
         .from("participants")
-        .select("first_name")
+        .select("first_name, last_name")
         .eq("email", email)
         .maybeSingle(),
       supabase
@@ -26,6 +27,7 @@ export default async function DiaPage() {
         .eq("email", email),
     ]);
     firstName = participant?.first_name ?? "";
+    lastName = participant?.last_name ?? "";
     for (const r of regs ?? []) {
       if (r.slot === 1) choice1 = r.session_id;
       if (r.slot === 2) choice2 = r.session_id;
@@ -37,6 +39,7 @@ export default async function DiaPage() {
   return (
     <DiaApp
       firstName={firstName}
+      lastName={lastName}
       choice1={choice1}
       choice2={choice2}
       allowTimeOverride={process.env.ALLOW_TIME_OVERRIDE === "true"}

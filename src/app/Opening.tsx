@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import LivingBackground from "@/components/LivingBackground";
-import { Brand, EASE, PrimaryButton } from "@/components/ui";
+import { EASE, PrimaryButton, SafeImg } from "@/components/ui";
 
 export default function Opening({ autoAdvance }: { autoAdvance: boolean }) {
   const router = useRouter();
@@ -27,7 +27,16 @@ export default function Opening({ autoAdvance }: { autoAdvance: boolean }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: EASE }}
       >
-        <Brand symbolSize={84} wordmarkHeight={52} />
+        <SafeImg
+          src="/brand/icon-sync.svg"
+          alt="Sync"
+          className="w-[280px] max-w-[70vw] object-contain"
+          fallback={
+            <span className="text-[48px] font-bold lowercase tracking-tight text-lime">
+              sync
+            </span>
+          }
+        />
       </motion.div>
 
       <motion.p

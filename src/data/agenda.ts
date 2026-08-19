@@ -65,7 +65,7 @@ export const AGENDA: AgendaBlock[] = [
     room: "IA House",
     speakers: [
       { name: "Silvia", photo: "/speakers/silvia.png" },
-      { name: "Davi Abreu", photo: "/speakers/davi-abreu.png" },
+      { name: "Davi Basã", photo: "/speakers/davi-basa.png" },
       { name: "Alice", photo: "/speakers/alice.png" },
     ],
     description:

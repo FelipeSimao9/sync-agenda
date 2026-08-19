@@ -64,9 +64,9 @@ export const AGENDA: AgendaBlock[] = [
     subtitle: "Por que estamos aqui? Agenda do dia",
     room: "IA House",
     speakers: [
-      { name: "Silvia", photo: "/speakers/silvia.jpg" },
-      { name: "Davi Abreu", photo: "/speakers/davi-abreu.jpg" },
-      { name: "Alice", photo: "/speakers/alice.jpg" },
+      { name: "Silvia", photo: "/speakers/silvia.png" },
+      { name: "Davi Abreu", photo: "/speakers/davi-abreu.png" },
+      { name: "Alice", photo: "/speakers/alice.png" },
     ],
     description:
       "O ponto de partida do dia: o que é o Sync, por que ele existe e o que esperar das próximas horas, com a fala do patrocínio âncora.",
@@ -96,25 +96,25 @@ export const AGENDA: AgendaBlock[] = [
         name: "Pedro Dias",
         role: "CEO & Founder",
         company: "Mevo",
-        photo: "/speakers/pedro-dias.jpg",
+        photo: "/speakers/pedro-dias.png",
       },
       {
         name: "Fábio Rodas",
         role: "CEO & Co-Founder",
         company: "Shopper",
-        photo: "/speakers/fabio-rodas.jpg",
+        photo: "/speakers/fabio-rodas.png",
       },
       {
         name: "Lucas Montez",
         role: "Senior Director",
         company: "iFood",
-        photo: "/speakers/lucas-montez.jpg",
+        photo: "/speakers/lucas-montez.png",
       },
       {
         name: "Jackellyne Santana",
         role: "Head de M&A",
         company: "iFood",
-        photo: "/speakers/jackellyne-santana.jpg",
+        photo: "/speakers/jackellyne-santana.png",
         isModerator: true,
       },
     ],
@@ -135,12 +135,12 @@ export const AGENDA: AgendaBlock[] = [
       {
         name: "Rodrigo Terron",
         company: "NewHack",
-        photo: "/speakers/rodrigo-terron.jpg",
+        photo: "/speakers/rodrigo-terron.png",
       },
       {
         name: "Daniella Quelho",
         company: "Endeavor",
-        photo: "/speakers/daniella-quelho.jpg",
+        photo: "/speakers/daniella-quelho.png",
       },
     ],
     description:
@@ -157,16 +157,16 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Guacamole",
     capacity: 70,
     speakers: [
-      { name: "Jose", company: "Valor Capital", photo: "/speakers/jose-valor.jpg" },
+      { name: "Jose", company: "Valor Capital", photo: "/speakers/jose-noblecilla.png" },
       {
         name: "Diego Zancaneli",
         company: "Pax",
-        photo: "/speakers/diego-zancaneli.jpg",
+        photo: "/speakers/diego-zacaneli.png",
       },
       {
         name: "Sofia Brandão",
         company: "Inteli",
-        photo: "/speakers/sofia-brandao.jpg",
+        photo: "/speakers/sofia-brandao.png",
         isModerator: true,
       },
     ],
@@ -232,12 +232,12 @@ export const AGENDA: AgendaBlock[] = [
     subtitle: "Empreendendo na nova era das startups",
     room: "IA House",
     speakers: [
-      { name: "Jose", company: "Vetto AI", photo: "/speakers/jose-vetto.jpg" },
-      { name: "Zen", company: "Vetto AI", photo: "/speakers/zen.jpg" },
+      { name: "Jose", company: "Vetto AI", photo: "/speakers/jose-andre.png" },
+      { name: "Zen", company: "Vetto AI", photo: "/speakers/zen.png" },
       {
         name: "Natasha Fujito",
         company: "ITA",
-        photo: "/speakers/natasha-fujito.jpg",
+        photo: "/speakers/natasha-fujito.png",
         isModerator: true,
       },
     ],
@@ -253,11 +253,10 @@ export const AGENDA: AgendaBlock[] = [
     title: "Painel: Traços de um empreendedor",
     room: "IA House",
     speakers: [
-      { name: "Veronica Serra", photo: "/speakers/veronica-serra.jpg" },
+      { name: "Veronica Serra", photo: "/speakers/veronica-serra.png" },
       {
-        name: "Davi Abreu",
-        company: "Inteli",
-        photo: "/speakers/davi-abreu.jpg",
+        name: "Davi Basa",
+        photo: "/speakers/davi-basa.png",
         isModerator: true,
       },
     ],
@@ -275,21 +274,21 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Sonho Grande",
     capacity: 40,
     speakers: [
-      { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus.jpg" },
+      { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus-arruda.png" },
       {
         name: "Fred Amaral",
         company: "Lerian",
-        photo: "/speakers/fred-amaral.jpg",
+        photo: "/speakers/fred-amaral.png",
       },
       {
         name: "Pedro Braz",
         company: "Credituz",
-        photo: "/speakers/pedro-braz.jpg",
+        photo: "/speakers/pedro-braz.png",
       },
       {
         name: "Marcelo Gobato",
         company: "Monashees",
-        photo: "/speakers/marcelo-gobato.jpg",
+        photo: "/speakers/marcelo-gobato.png",
         isModerator: true,
       },
     ],
@@ -307,12 +306,12 @@ export const AGENDA: AgendaBlock[] = [
     room: "Sala Arroz Integral",
     capacity: 60,
     speakers: [
-      { name: "Pedro", company: "Vereda", photo: "/speakers/pedro-vereda.jpg" },
-      { name: "Flavio", company: "Revert", photo: "/speakers/flavio-revert.jpg" },
+      { name: "Pedro", company: "Vereda", photo: "/speakers/pedro-galindo.png" },
+      { name: "Flavio", company: "Revert", photo: "/speakers/flavio-terni.png" },
       {
         name: "Rayssa",
         company: "GV",
-        photo: "/speakers/rayssa.jpg",
+        photo: "/speakers/rayssa.png",
         isModerator: true,
       },
     ],
@@ -354,12 +353,12 @@ export const AGENDA: AgendaBlock[] = [
       {
         name: "Fernando Gadotti",
         company: "Tako",
-        photo: "/speakers/fernando-gadotti.jpg",
+        photo: "/speakers/fernando-gadotti.png",
       },
       {
         name: "Davi Abreu",
         company: "Inteli",
-        photo: "/speakers/davi-abreu.jpg",
+        photo: "/speakers/davi-abreu.png",
         isModerator: true,
       },
     ],
@@ -387,8 +386,8 @@ export const AGENDA: AgendaBlock[] = [
     title: "Fechamento",
     room: "IA House",
     speakers: [
-      { name: "Breno", photo: "/speakers/breno.jpg" },
-      { name: "Alice", photo: "/speakers/alice.jpg" },
+      { name: "Breno", photo: "/speakers/breno.png" },
+      { name: "Alice", photo: "/speakers/alice.png" },
     ],
     description:
       "O encerramento oficial do Sync 2026: os destaques do dia e o que vem depois do evento.",

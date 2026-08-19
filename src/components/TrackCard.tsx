@@ -108,11 +108,11 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
         )}
 
         {block.speakers.length > 0 && (
-          <div className="no-scrollbar -mx-1 mt-1 flex gap-2 overflow-x-auto px-1">
+          <div className="mt-1 flex flex-col gap-2">
             {block.speakers.map((s) => (
               <span
                 key={s.name}
-                className="flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] py-1 pl-1 pr-3"
+                className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] py-1 pl-1 pr-3"
               >
                 <Avatar name={s.name} photo={s.photo} size={26} />
                 <span className="text-[12px] text-cream">

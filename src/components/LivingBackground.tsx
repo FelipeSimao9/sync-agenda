@@ -60,6 +60,15 @@ export default function LivingBackground({ intensity = "high" }: Props) {
           }}
         />
       </div>
+      {/* desvanece para o ink nas bordas: as barras do navegador (theme-color
+          #18212B) encostam na página já na mesma cor, sem "borda" visível */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, #18212B 0%, rgba(24,33,43,0) 16%, rgba(24,33,43,0) 84%, #18212B 100%)",
+        }}
+      />
       {/* grão */}
       <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.08] mix-blend-overlay">
         <filter id="sync-noise">

@@ -44,14 +44,15 @@ export default function EntrarPage() {
     });
   }
 
+  const detailsValid =
+    firstName.trim() !== "" &&
+    lastName.trim() !== "" &&
+    hasNeeds !== null &&
+    (!hasNeeds || needs.trim() !== "");
+
   function submitDetails() {
     setError(null);
-    if (!firstName.trim()) return setError("Falta o nome.");
-    if (!lastName.trim()) return setError("Falta o sobrenome.");
-    if (hasNeeds === null)
-      return setError("Responde sobre acessibilidade, por favor.");
-    if (hasNeeds && !needs.trim())
-      return setError("Conta como podemos ajudar.");
+    if (!detailsValid) return;
     const data: PendingSignup = {
       email: email.trim().toLowerCase(),
       firstName: firstName.trim(),
@@ -205,7 +206,10 @@ export default function EntrarPage() {
 
         <motion.div layout className="mt-8">
           <PrimaryButton
-            disabled={pending || (step === "email" && !email.trim())}
+            disabled={
+              pending ||
+              (step === "email" ? !email.trim() : !detailsValid)
+            }
             onClick={step === "email" ? submitEmail : submitDetails}
           >
             {pending ? "Verificando…" : "Continuar"}

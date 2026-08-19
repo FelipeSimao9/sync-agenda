@@ -214,8 +214,7 @@ export default function EscolherPage() {
           <motion.div
             key="intro"
             {...slide}
-            className="flex h-dvh cursor-pointer flex-col items-center justify-center gap-8 px-8 text-center"
-            onClick={() => setStep("slot1")}
+            className="flex h-dvh flex-col items-center justify-center gap-8 px-8 text-center"
           >
             <div>
               <p className="eyebrow mb-4">Suas trilhas</p>

@@ -117,13 +117,14 @@ export default function ProgramWalkthrough({ blocks, onClose }: Props) {
             )}
 
             {block && block.speakers.length > 0 && (
-              <div className="no-scrollbar -mx-6 mt-6 flex gap-5 overflow-x-auto px-6">
+              <div className="no-scrollbar -mx-6 mt-6 flex gap-2.5 overflow-x-auto px-6">
                 {block.speakers.map((s) => (
                   <div
                     key={s.name}
-                    className="flex w-[86px] shrink-0 flex-col items-center gap-2 text-center"
+                    className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-2 text-center"
+                    style={{ maxWidth: 96 }}
                   >
-                    <Avatar name={s.name} photo={s.photo} size={56} />
+                    <Avatar name={s.name} photo={s.photo} size={54} />
                     <div>
                       <p className="text-[12px] font-semibold leading-tight text-cream">
                         {s.name}

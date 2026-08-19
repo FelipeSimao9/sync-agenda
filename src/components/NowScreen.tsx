@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Leaf, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import type { AgendaBlock } from "@/data/agenda";
 import {
   blockProgress,
@@ -44,8 +44,7 @@ export function MenuArea({ block }: { block: AgendaBlock }) {
                   {label}
                 </p>
                 {veg && (
-                  <span className="mt-1.5 inline-flex items-center gap-1 rounded-full border border-lime/50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-lime">
-                    <Leaf size={10} strokeWidth={2} />
+                  <span className="mt-1.5 inline-flex max-w-full items-center gap-0.5 rounded-full border border-lime/50 px-1.5 py-0.5 text-[8.5px] font-bold uppercase tracking-wide text-lime">
                     vegetariano
                   </span>
                 )}
@@ -162,7 +161,7 @@ function FocusContent({
             variants={{
               show: { transition: { staggerChildren: 0.06, delayChildren: 0.25 } },
             }}
-            className="no-scrollbar -mx-6 flex gap-5 overflow-x-auto px-6"
+            className="no-scrollbar -mx-6 flex gap-2.5 overflow-x-auto px-6"
           >
             {block.speakers.map((s) => (
               <motion.div
@@ -171,9 +170,10 @@ function FocusContent({
                   hidden: { opacity: 0, y: 12 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
                 }}
-                className="flex w-[86px] shrink-0 flex-col items-center gap-2 text-center"
+                className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-2 text-center"
+                style={{ maxWidth: 96 }}
               >
-                <Avatar name={s.name} photo={s.photo} size={60} animateRing />
+                <Avatar name={s.name} photo={s.photo} size={54} animateRing />
                 <div>
                   <p className="text-[12px] font-semibold leading-tight text-cream">
                     {s.name}

@@ -27,17 +27,19 @@ function SlotScreen({
   counts,
   onSelect,
   onContinue,
+  onSkip,
 }: {
   slot: 1 | 2;
   selected: string | undefined;
   counts: CountsMap;
   onSelect: (id: string) => void;
   onContinue: () => void;
+  onSkip: () => void;
 }) {
   const tracks = tracksForSlot(slot);
   const [page, setPage] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const total = tracks.length + 1;
+  const total = tracks.length;
 
   function onScroll() {
     const el = scrollRef.current;
@@ -80,44 +82,6 @@ function SlotScreen({
             />
           </motion.div>
         ))}
-        {/* opção "não vou" — mais sóbria */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: EASE, delay: 0.05 * tracks.length }}
-          className="h-full w-[85%] shrink-0 snap-center"
-        >
-          <motion.button
-            type="button"
-            whileTap={{ scale: 0.98 }}
-            animate={{ y: selected === NONE ? -4 : 0 }}
-            onClick={() => onSelect(NONE)}
-            className={`flex h-full w-full flex-col items-center justify-center gap-3 rounded-[28px] border p-8 text-center backdrop-blur-xl transition-colors ${
-              selected === NONE
-                ? "border-lime bg-white/[0.07]"
-                : "border-white/10 bg-white/[0.04]"
-            }`}
-          >
-            <p className="text-[20px] font-bold leading-snug text-cream">
-              Não vou participar de nenhuma dessas
-            </p>
-            <p className="text-[14px] text-mist">
-              Você fica livre nesse horário.
-            </p>
-            <AnimatePresence>
-              {selected === NONE && (
-                <motion.span
-                  initial={{ scale: 0.6, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.6, opacity: 0 }}
-                  className="mt-2 rounded-full bg-lime px-4 py-1 text-[13px] font-bold text-ink-deep"
-                >
-                  Selecionado
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </motion.button>
-        </motion.div>
       </div>
 
       {/* dots */}
@@ -132,10 +96,21 @@ function SlotScreen({
         ))}
       </div>
 
-      <div className="px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
-        <PrimaryButton disabled={!selected} onClick={onContinue}>
+      <div className="flex flex-col items-center gap-3 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4">
+        <PrimaryButton
+          disabled={!selected || selected === NONE}
+          onClick={onContinue}
+        >
           Continuar
         </PrimaryButton>
+        <motion.button
+          type="button"
+          whileTap={{ scale: 0.97 }}
+          onClick={onSkip}
+          className="py-1 text-[14px] font-medium text-mist underline-offset-4 hover:underline"
+        >
+          Não vou participar de nenhuma dessas
+        </motion.button>
       </div>
     </div>
   );
@@ -285,6 +260,10 @@ export default function EscolherPage() {
               counts={counts}
               onSelect={(id) => setChoices((c) => ({ ...c, 1: id }))}
               onContinue={() => setStep("slot2")}
+              onSkip={() => {
+                setChoices((c) => ({ ...c, 1: NONE }));
+                setStep("slot2");
+              }}
             />
           </motion.div>
         )}
@@ -297,6 +276,10 @@ export default function EscolherPage() {
               counts={counts}
               onSelect={(id) => setChoices((c) => ({ ...c, 2: id }))}
               onContinue={() => setStep("confirm")}
+              onSkip={() => {
+                setChoices((c) => ({ ...c, 2: NONE }));
+                setStep("confirm");
+              }}
             />
           </motion.div>
         )}

@@ -46,8 +46,9 @@ function SymbolHeader() {
       }}
     >
       <SafeImg
-        src="/brand/symbol.png"
-        className="h-14 w-14 object-contain opacity-90"
+        src="/brand/icon-sync.svg"
+        alt="Sync"
+        className="h-12 w-[70%] object-contain opacity-90"
         fallback={
           <span className="text-3xl font-bold lowercase text-lime">sync</span>
         }

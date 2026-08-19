@@ -1,14 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, MapPin } from "lucide-react";
 import type { AgendaBlock, Speaker } from "@/data/agenda";
 import Avatar from "./Avatar";
-import { AnimNumber, EASE } from "./ui";
+import { AnimNumber, EASE, SafeImg } from "./ui";
 
 function PhotoTile({ speaker }: { speaker: Speaker }) {
-  const [broken, setBroken] = useState(false);
   const initials = speaker.name
     .trim()
     .split(/\s+/)
@@ -16,32 +14,29 @@ function PhotoTile({ speaker }: { speaker: Speaker }) {
     .filter((_, i, a) => i === 0 || i === a.length - 1)
     .join("")
     .toUpperCase();
-  if (!speaker.photo || broken) {
-    return (
-      <div
-        className="flex h-full flex-1 items-center justify-center"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(229,242,126,0.35), rgba(143,160,184,0.3)), #0C1015",
-        }}
-      >
-        <span className="text-2xl font-bold text-lime/80">{initials}</span>
-      </div>
-    );
-  }
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={speaker.photo}
-      alt={speaker.name}
-      className="h-full min-w-0 flex-1 object-cover"
-      onError={() => setBroken(true)}
-    />
+    <div className="h-full min-w-0 flex-1">
+      <SafeImg
+        src={speaker.photo}
+        alt={speaker.name}
+        className="h-full w-full object-cover"
+        fallback={
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(229,242,126,0.35), rgba(143,160,184,0.3)), #0C1015",
+            }}
+          >
+            <span className="text-2xl font-bold text-lime/80">{initials}</span>
+          </div>
+        }
+      />
+    </div>
   );
 }
 
 function SymbolHeader() {
-  const [broken, setBroken] = useState(false);
   return (
     <div
       className="flex h-full w-full items-center justify-center"
@@ -50,17 +45,13 @@ function SymbolHeader() {
           "linear-gradient(135deg, rgba(229,242,126,0.4), rgba(143,160,184,0.28)), #0C1015",
       }}
     >
-      {broken ? (
-        <span className="text-3xl font-bold lowercase text-lime">sync</span>
-      ) : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src="/brand/symbol.png"
-          alt=""
-          className="h-14 w-14 object-contain opacity-90"
-          onError={() => setBroken(true)}
-        />
-      )}
+      <SafeImg
+        src="/brand/symbol.png"
+        className="h-14 w-14 object-contain opacity-90"
+        fallback={
+          <span className="text-3xl font-bold lowercase text-lime">sync</span>
+        }
+      />
     </div>
   );
 }

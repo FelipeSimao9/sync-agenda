@@ -15,7 +15,8 @@ html {
 }
 
 body {
-  background: var(--color-ink);
+  /* o fundo fica no html: um bg opaco aqui cobriria o fundo vivo (-z-10) */
+  background: transparent;
   color: var(--color-cream);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

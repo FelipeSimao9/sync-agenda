@@ -3,6 +3,43 @@
 import { animate, motion, type HTMLMotionProps } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * <img> que cai num fallback quando o arquivo não existe — inclusive quando
+ * o erro acontece antes da hidratação (checa naturalWidth no mount).
+ */
+export function SafeImg({
+  src,
+  alt = "",
+  className,
+  style,
+  fallback = null,
+}: {
+  src?: string;
+  alt?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  fallback?: React.ReactNode;
+}) {
+  const ref = useRef<HTMLImageElement>(null);
+  const [broken, setBroken] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (el && el.complete && el.naturalWidth === 0) setBroken(true);
+  }, [src]);
+  if (!src || broken) return <>{fallback}</>;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      ref={ref}
+      src={src}
+      alt={alt}
+      className={className}
+      style={style}
+      onError={() => setBroken(true)}
+    />
+  );
+}
+
 /** Número que anima ao mudar (400ms), com dígitos tabulares. */
 export function AnimNumber({ value }: { value: number }) {
   const [display, setDisplay] = useState(value);
@@ -59,37 +96,40 @@ export function Brand({
   symbolSize?: number;
   wordmarkHeight?: number;
 }) {
-  const [symbolBroken, setSymbolBroken] = useState(false);
-  const [wordBroken, setWordBroken] = useState(false);
   return (
     <div className="flex flex-col items-center gap-4">
-      {!symbolBroken && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src="/brand/symbol.png"
-          alt=""
-          style={{ width: symbolSize, height: symbolSize }}
-          className="object-contain"
-          onError={() => setSymbolBroken(true)}
-        />
-      )}
-      {wordBroken ? (
-        <span
-          className="font-bold lowercase tracking-tight text-lime"
-          style={{ fontSize: wordmarkHeight * 0.9, lineHeight: 1 }}
-        >
-          sync
-        </span>
-      ) : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src="/brand/wordmark.png"
-          alt="Sync"
-          style={{ height: wordmarkHeight }}
-          className="object-contain"
-          onError={() => setWordBroken(true)}
-        />
-      )}
+      <SafeImg
+        src="/brand/symbol.png"
+        style={{ width: symbolSize, height: symbolSize }}
+        className="object-contain"
+        fallback={
+          <span
+            aria-hidden
+            className="flex items-center justify-center rounded-full border-[3px] border-lime font-bold text-lime"
+            style={{
+              width: symbolSize,
+              height: symbolSize,
+              fontSize: symbolSize * 0.42,
+            }}
+          >
+            S
+          </span>
+        }
+      />
+      <SafeImg
+        src="/brand/wordmark.png"
+        alt="Sync"
+        style={{ height: wordmarkHeight }}
+        className="object-contain"
+        fallback={
+          <span
+            className="font-bold lowercase tracking-tight text-lime"
+            style={{ fontSize: wordmarkHeight * 0.9, lineHeight: 1 }}
+          >
+            sync
+          </span>
+        }
+      />
     </div>
   );
 }

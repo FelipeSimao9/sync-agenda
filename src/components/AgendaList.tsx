@@ -82,10 +82,12 @@ export default function AgendaList({ blocks, eventState, nowMs, onOpen }: Props)
 
           const row =
             b.kind === "block" ? (
-              <button
-                type="button"
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={() => onOpen(b.block)}
-                className="flex-1 text-left"
+                onKeyDown={(e) => e.key === "Enter" && onOpen(b.block)}
+                className="flex-1 cursor-pointer text-left"
               >
                 <p className="text-[16px] font-semibold leading-snug text-cream">
                   {b.block.title}
@@ -98,7 +100,7 @@ export default function AgendaList({ blocks, eventState, nowMs, onOpen }: Props)
                     onToggle={() => setExpanded(open ? null : id)}
                   />
                 )}
-              </button>
+              </div>
             ) : (
               <div className="flex-1">
                 <p className="text-[16px] font-semibold leading-snug text-cream">
@@ -123,9 +125,11 @@ export default function AgendaList({ blocks, eventState, nowMs, onOpen }: Props)
                 hidden: { opacity: 0, y: 14 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
               }}
-              className={`px-6 py-4 transition-opacity ${isPast ? "opacity-40" : ""}`}
+              className="px-6 py-4"
             >
-              <div className="flex gap-4">
+              <div
+                className={`flex gap-4 transition-opacity ${isPast ? "opacity-40" : ""}`}
+              >
                 <div className="w-[52px] shrink-0 pt-0.5">
                   <p className="tabular flex items-center gap-1.5 text-[13px] font-semibold text-mist">
                     {isCurrent && (

@@ -18,19 +18,14 @@ import AgendaList from "./AgendaList";
 import BlockSheet from "./BlockSheet";
 import NowScreen from "./NowScreen";
 import TabBar, { type Tab } from "./TabBar";
-import { AnimNumber, EASE, PrimaryButton } from "./ui";
+import { AnimNumber, EASE, PrimaryButton, SafeImg } from "./ui";
 
 function EventPhoto() {
-  const [broken, setBroken] = useState(false);
-  if (broken) return null;
   return (
     <div className="absolute inset-0 -z-[5] overflow-hidden">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <SafeImg
         src="/brand/event-photo.png"
-        alt=""
         className="h-full w-full object-cover opacity-25"
-        onError={() => setBroken(true)}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/40 to-ink" />
     </div>

@@ -23,7 +23,7 @@ export default function LivingBackground({ intensity = "high" }: Props) {
             left: "-20vmax",
             top: "-25vmax",
             background:
-              "radial-gradient(circle at 40% 40%, rgba(229,242,126,0.48), transparent 65%)",
+              "radial-gradient(circle at 40% 40%, rgba(229,242,126,0.55), transparent 65%)",
           }}
         />
         <div
@@ -34,7 +34,7 @@ export default function LivingBackground({ intensity = "high" }: Props) {
             right: "-25vmax",
             top: "10vmax",
             background:
-              "radial-gradient(circle at 55% 45%, rgba(143,160,184,0.34), transparent 65%)",
+              "radial-gradient(circle at 55% 45%, rgba(143,160,184,0.45), transparent 65%)",
           }}
         />
         <div
@@ -45,7 +45,7 @@ export default function LivingBackground({ intensity = "high" }: Props) {
             left: "-10vmax",
             bottom: "-25vmax",
             background:
-              "radial-gradient(circle at 50% 50%, rgba(229,242,126,0.36), transparent 65%)",
+              "radial-gradient(circle at 50% 50%, rgba(229,242,126,0.45), transparent 65%)",
           }}
         />
         <div
@@ -56,7 +56,7 @@ export default function LivingBackground({ intensity = "high" }: Props) {
             right: "-12vmax",
             bottom: "-15vmax",
             background:
-              "radial-gradient(circle at 50% 50%, rgba(183,186,204,0.2), transparent 65%)",
+              "radial-gradient(circle at 50% 50%, rgba(183,186,204,0.3), transparent 65%)",
           }}
         />
       </div>

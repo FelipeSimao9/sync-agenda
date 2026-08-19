@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { SafeImg } from "./ui";
 
 type Props = {
   name: string;
@@ -28,8 +28,6 @@ export default function Avatar({
   size = 56,
   animateRing = false,
 }: Props) {
-  const [broken, setBroken] = useState(false);
-  const showPhoto = photo && !broken;
   const stroke = Math.max(2, Math.round(size / 24));
   const pad = stroke + 3;
   const r = (size - stroke) / 2;
@@ -78,22 +76,19 @@ export default function Avatar({
         className="absolute overflow-hidden rounded-full bg-ink-deep"
         style={{ inset: pad }}
       >
-        {showPhoto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={photo}
-            alt={name}
-            className="h-full w-full object-cover"
-            onError={() => setBroken(true)}
-          />
-        ) : (
-          <div
-            className="flex h-full w-full items-center justify-center font-bold text-lime"
-            style={{ fontSize: Math.max(11, size * 0.28) }}
-          >
-            {initials(name)}
-          </div>
-        )}
+        <SafeImg
+          src={photo}
+          alt={name}
+          className="h-full w-full object-cover"
+          fallback={
+            <div
+              className="flex h-full w-full items-center justify-center font-bold text-lime"
+              style={{ fontSize: Math.max(11, size * 0.28) }}
+            >
+              {initials(name)}
+            </div>
+          }
+        />
       </div>
     </div>
   );

@@ -32,6 +32,8 @@ export async function checkEmail(raw: string): Promise<CheckEmailResult> {
     }
     return { status: "new" };
   } catch {
+    // sem banco configurado (dev), segue como cadastro novo
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) return { status: "new" };
     return { status: "error" };
   }
 }

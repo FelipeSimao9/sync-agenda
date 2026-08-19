@@ -93,7 +93,15 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
   const realNow = useServerNow(1000);
   const now = override ?? realNow;
 
-  const [tab, setTab] = useState<Tab>("agora");
+  const [{ tab, dir }, setTabState] = useState<{ tab: Tab; dir: 1 | -1 }>({
+    tab: "agora",
+    dir: 1,
+  });
+  const setTab = (next: Tab) =>
+    setTabState((s) => ({
+      tab: next,
+      dir: TAB_ORDER.indexOf(next) >= TAB_ORDER.indexOf(s.tab) ? 1 : -1,
+    }));
   const [sheetBlock, setSheetBlock] = useState<AgendaBlock | null>(null);
   const [showProgram, setShowProgram] = useState(false);
   const touch = useRef<{ x: number; y: number } | null>(null);
@@ -274,12 +282,18 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
         </div>
       )}
 
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait" initial={false} custom={dir}>
         <motion.div
           key={tab}
-          initial={{ opacity: 0, x: tab === "ingressos" ? -40 : 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: tab === "ingressos" ? -40 : 40 }}
+          custom={dir}
+          variants={{
+            enter: (d: number) => ({ opacity: 0, x: 40 * d }),
+            center: { opacity: 1, x: 0 },
+            exit: (d: number) => ({ opacity: 0, x: -40 * d }),
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
           transition={{ duration: 0.3, ease: EASE }}
         >
           {tab === "ingressos" ? (

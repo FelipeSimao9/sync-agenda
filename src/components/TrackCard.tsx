@@ -13,8 +13,9 @@ function PhotoTile({ speaker }: { speaker: Speaker }) {
     .filter((_, i, a) => i === 0 || i === a.length - 1)
     .join("")
     .toUpperCase();
+  const roleLine = [speaker.role, speaker.company].filter(Boolean).join(" · ");
   return (
-    <div className="h-full min-w-0 flex-1">
+    <div className="relative h-full min-w-0 flex-1">
       <SafeImg
         src={speaker.photo}
         alt={speaker.name}
@@ -31,6 +32,17 @@ function PhotoTile({ speaker }: { speaker: Speaker }) {
           </div>
         }
       />
+      {/* legenda ancorada na foto: identifica a pessoa sem repetir avatar */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/55 to-transparent px-2 pb-2 pt-7 text-center">
+        <p className="truncate text-[11px] font-bold leading-tight text-cream">
+          {speaker.name}
+        </p>
+        {roleLine && (
+          <p className="truncate text-[10px] leading-tight text-cream/75">
+            {roleLine}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -85,7 +97,7 @@ export default function TrackCard({ block, registered, capacity, room, selected,
       style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.35)" }}
     >
       {/* fotos dos speakers */}
-      <div className="relative flex h-36 w-full shrink-0 overflow-hidden">
+      <div className="relative flex h-40 w-full shrink-0 overflow-hidden">
         {panelists.length > 0 ? (
           panelists.map((s) => <PhotoTile key={s.name} speaker={s} />)
         ) : (

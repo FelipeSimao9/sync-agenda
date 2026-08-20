@@ -33,6 +33,7 @@ export function SafeImg({
       ref={ref}
       src={src}
       alt={alt}
+      decoding="async"
       className={className}
       style={style}
       onError={() => setBroken(true)}

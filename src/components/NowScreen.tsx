@@ -236,6 +236,21 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
   }
 
   const focus = getNowFocus(blocks, nowMs);
+  const focusId = focus ? effId(focus.focus) : null;
+
+  // Pré-baixa e decodifica as fotos dos palestrantes do bloco em foco para o
+  // modal abrir sem espera no primeiro toque (decode é caro em mobile).
+  useEffect(() => {
+    if (!focus || focus.focus.kind !== "block") return;
+    for (const s of focus.focus.block.speakers) {
+      if (!s.photo) continue;
+      const img = new window.Image();
+      img.src = s.photo;
+      img.decode?.().catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusId]);
+
   if (!focus) return null;
   const { focus: focusBlock, focusKind, secondary, secondaryKind } = focus;
 

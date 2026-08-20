@@ -64,6 +64,7 @@ type Props = {
 };
 
 export default function TrackCard({ block, registered, selected, onSelect }: Props) {
+  const panelists = block.speakers.filter((s) => !s.isModerator);
   const capacity = block.capacity ?? 0;
   const remaining = Math.max(0, capacity - registered);
   const full = remaining <= 0;
@@ -83,8 +84,8 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
     >
       {/* fotos dos speakers */}
       <div className="relative flex h-36 w-full shrink-0 overflow-hidden">
-        {block.speakers.length > 0 ? (
-          block.speakers.map((s) => <PhotoTile key={s.name} speaker={s} />)
+        {panelists.length > 0 ? (
+          panelists.map((s) => <PhotoTile key={s.name} speaker={s} />)
         ) : (
           <SymbolHeader />
         )}
@@ -103,6 +104,11 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
         {block.description && (
           <p className="line-clamp-5 text-[14px] leading-snug text-cream/85">
             {block.description}
+          </p>
+        )}
+        {block.mediatedBy && (
+          <p className="text-[12px] font-bold uppercase tracking-wider text-mist">
+            Mediado por {block.mediatedBy}
           </p>
         )}
 

@@ -19,6 +19,7 @@ export type AgendaBlock = {
   room: string;
   capacity?: number;
   speakers: Speaker[];
+  mediatedBy?: string;
   description?: string;
   menu?: { title: string; note?: string; items: string[] }[];
 };
@@ -284,6 +285,7 @@ export const AGENDA: AgendaBlock[] = [
     shortTitle: "Fintech",
     room: "Sala Sonho Grande",
     capacity: 40,
+    mediatedBy: "Monashees",
     speakers: [
       { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus-arruda.png", linkedin: "https://www.linkedin.com/in/petrusarruda/" },
       {

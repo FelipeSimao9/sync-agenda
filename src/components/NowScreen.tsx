@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
-import type { AgendaBlock, Speaker } from "@/data/agenda";
+import type { AgendaBlock } from "@/data/agenda";
 import {
   blockProgress,
   effEnd,
@@ -15,7 +15,6 @@ import {
   type FocusKind,
 } from "@/lib/time";
 import Avatar from "./Avatar";
-import SpeakerModal from "./SpeakerModal";
 import { EASE, SyncLogo } from "./ui";
 
 function eyebrowFor(kind: FocusKind, block: EffectiveBlock, nowMs: number) {
@@ -78,12 +77,10 @@ function FocusContent({
   eff,
   kind,
   nowMs,
-  onSpeaker,
 }: {
   eff: EffectiveBlock;
   kind: FocusKind;
   nowMs: number;
-  onSpeaker: (s: Speaker) => void;
 }) {
   const block = eff.kind === "block" ? eff.block : null;
   const title = block ? block.title : "Trilhas paralelas";
@@ -168,15 +165,12 @@ function FocusContent({
             className="no-scrollbar -mx-6 flex gap-2.5 overflow-x-auto px-6"
           >
             {block.speakers.map((s) => (
-              <motion.button
+              <motion.div
                 key={s.name}
-                type="button"
-                onClick={() => onSpeaker(s)}
                 variants={{
                   hidden: { opacity: 0, y: 12 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
                 }}
-                whileTap={{ scale: 0.94 }}
                 className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-2 text-center"
                 style={{ maxWidth: 96 }}
               >
@@ -191,7 +185,7 @@ function FocusContent({
                     </p>
                   )}
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </motion.div>
         ) : eff.kind === "slot-group" ? (
@@ -225,7 +219,6 @@ type Props = {
 export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props) {
   // "Como chegar?" por extenso até o primeiro clique; depois, só o ícone
   const [directionsSeen, setDirectionsSeen] = useState(true);
-  const [speaker, setSpeaker] = useState<Speaker | null>(null);
   useEffect(() => {
     setDirectionsSeen(localStorage.getItem("sync_directions_seen") === "1");
   }, []);
@@ -236,21 +229,6 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
   }
 
   const focus = getNowFocus(blocks, nowMs);
-  const focusId = focus ? effId(focus.focus) : null;
-
-  // Pré-baixa e decodifica as fotos dos palestrantes do bloco em foco para o
-  // modal abrir sem espera no primeiro toque (decode é caro em mobile).
-  useEffect(() => {
-    if (!focus || focus.focus.kind !== "block") return;
-    for (const s of focus.focus.block.speakers) {
-      if (!s.photo) continue;
-      const img = new window.Image();
-      img.src = s.photo;
-      img.decode?.().catch(() => {});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusId]);
-
   if (!focus) return null;
   const { focus: focusBlock, focusKind, secondary, secondaryKind } = focus;
 
@@ -299,12 +277,7 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
             transition={{ duration: 0.4, ease: EASE }}
             className="h-full"
           >
-            <FocusContent
-              eff={focusBlock}
-              kind={focusKind}
-              nowMs={nowMs}
-              onSpeaker={setSpeaker}
-            />
+            <FocusContent eff={focusBlock} kind={focusKind} nowMs={nowMs} />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -336,8 +309,6 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
           </p>
         </motion.button>
       )}
-
-      <SpeakerModal speaker={speaker} onClose={() => setSpeaker(null)} />
     </div>
   );
 }

@@ -40,7 +40,7 @@ export async function checkEmail(raw: string): Promise<CheckEmailResult> {
 
 export type CountsMap = Record<
   string,
-  { registered: number; remaining: number; capacity: number }
+  { registered: number; remaining: number; capacity: number; room?: string }
 >;
 
 export async function getCounts(): Promise<CountsMap> {
@@ -51,6 +51,7 @@ export async function getCounts(): Promise<CountsMap> {
         registered: c.registered,
         remaining: c.remaining,
         capacity: c.capacity,
+        room: c.room,
       };
     }
   } catch {

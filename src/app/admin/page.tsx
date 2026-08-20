@@ -3,7 +3,7 @@ import { isAdmin } from "@/lib/auth";
 import { fetchSessionCounts, supabaseAdmin, type SessionCount } from "@/lib/supabase";
 import { tracksForSlot, SLOT_TIMES } from "@/data/agenda";
 import AutoRefresh from "./AutoRefresh";
-import CapacityEditor from "./CapacityEditor";
+import SessionEditor from "./SessionEditor";
 import { adminLogout } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -61,8 +61,8 @@ export default async function AdminPage() {
     dbError = e instanceof Error ? e.message : "erro desconhecido";
   }
 
-  const capacityBySession = new Map(
-    sessionCounts.map((c) => [c.session_id, c.capacity]),
+  const sessionInfo = new Map(
+    sessionCounts.map((c) => [c.session_id, { capacity: c.capacity, room: c.room }]),
   );
   const byEmail = new Map(participants.map((p) => [p.email, p]));
   const bySession = new Map<string, Registration[]>();
@@ -140,7 +140,8 @@ export default async function AdminPage() {
               const regs = (bySession.get(t.id) ?? []).sort((a, b) =>
                 fullName(a.email).localeCompare(fullName(b.email), "pt-BR"),
               );
-              const capacity = capacityBySession.get(t.id);
+              const info = sessionInfo.get(t.id);
+              const capacity = info?.capacity;
               return (
                 <div
                   key={t.id}
@@ -151,7 +152,7 @@ export default async function AdminPage() {
                       <p className="text-[17px] font-bold text-cream">
                         {t.shortTitle}
                       </p>
-                      <p className="text-[13px] text-mist">{t.room}</p>
+                      <p className="text-[13px] text-mist">{info?.room ?? t.room}</p>
                     </div>
                     <p className="tabular text-[15px] font-semibold text-cream">
                       {regs.length}/{capacity ?? "—"}
@@ -161,9 +162,10 @@ export default async function AdminPage() {
                     <Bar registered={regs.length} capacity={capacity ?? 0} />
                   </div>
                   {capacity !== undefined ? (
-                    <CapacityEditor
+                    <SessionEditor
                       sessionId={t.id}
                       capacity={capacity}
+                      room={info?.room ?? t.room}
                       registered={regs.length}
                     />
                   ) : (

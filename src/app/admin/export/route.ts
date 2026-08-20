@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { blockById } from "@/data/agenda";
 import { isAdmin } from "@/lib/auth";
-import { supabaseAdmin } from "@/lib/supabase";
+import { fetchSessionRooms, supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +26,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  let rooms: Record<string, string> = {};
+  try {
+    rooms = await fetchSessionRooms();
+  } catch {
+    // sem banco: mantém as salas da agenda
+  }
+
   const header =
     "first_name,last_name,email,accessibility_needs,slot,session_title,room,created_at";
   const rows = (data ?? []).map((r) => {
@@ -42,7 +49,7 @@ export async function GET(req: NextRequest) {
       csvField(p?.accessibility_needs),
       String(r.slot),
       csvField(block?.title ?? r.session_id),
-      csvField(block?.room),
+      csvField(rooms[r.session_id] ?? block?.room),
       csvField(r.created_at),
     ].join(",");
   });

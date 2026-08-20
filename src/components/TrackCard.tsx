@@ -60,11 +60,12 @@ type Props = {
   block: AgendaBlock;
   registered: number;
   capacity?: number; // vem do banco via /api/counts; undefined enquanto carrega
+  room?: string; // idem — sala do banco; cai no valor da agenda enquanto carrega
   selected: boolean;
   onSelect: () => void;
 };
 
-export default function TrackCard({ block, registered, capacity, selected, onSelect }: Props) {
+export default function TrackCard({ block, registered, capacity, room, selected, onSelect }: Props) {
   const panelists = block.speakers.filter((s) => !s.isModerator);
   const loaded = capacity !== undefined;
   const remaining = loaded ? Math.max(0, capacity - registered) : 0;
@@ -116,7 +117,7 @@ export default function TrackCard({ block, registered, capacity, selected, onSel
         <div className="mt-auto pt-2">
           <div className="flex items-center gap-1.5 text-[15px] font-semibold text-lime">
             <MapPin size={16} strokeWidth={1.75} />
-            {block.room}
+            {room ?? block.room}
           </div>
           <div className="mt-2 flex items-center justify-between text-[12px] text-mist">
             <span>

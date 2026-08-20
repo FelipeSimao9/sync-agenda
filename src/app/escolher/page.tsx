@@ -78,6 +78,7 @@ function SlotScreen({
               block={t}
               registered={counts[t.id]?.registered ?? 0}
               capacity={counts[t.id]?.capacity}
+              room={counts[t.id]?.room}
               selected={selected === t.id}
               onSelect={() => onSelect(t.id)}
             />
@@ -316,7 +317,7 @@ export default function EscolherPage() {
                     </p>
                     <p className="mt-1.5 flex items-center gap-1.5 text-[14px] font-semibold text-lime">
                       <MapPin size={15} strokeWidth={1.75} />
-                      {block.room}
+                      {counts[block.id]?.room ?? block.room}
                     </p>
                   </>
                 ) : (

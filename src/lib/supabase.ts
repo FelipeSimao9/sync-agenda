@@ -24,12 +24,29 @@ export type SessionCount = {
   capacity: number;
   registered: number;
   remaining: number;
+  room?: string;
 };
 
 export async function fetchSessionCounts(): Promise<SessionCount[]> {
-  const { data, error } = await supabaseAdmin()
-    .from("session_counts")
-    .select("*");
+  const supabase = supabaseAdmin();
+  const [counts, sessions] = await Promise.all([
+    supabase.from("session_counts").select("*"),
+    supabase.from("sessions").select("id, room"),
+  ]);
+  if (counts.error) throw new Error(counts.error.message);
+  if (sessions.error) throw new Error(sessions.error.message);
+  const rooms = new Map(
+    (sessions.data ?? []).map((s) => [s.id as string, s.room as string]),
+  );
+  return ((counts.data ?? []) as SessionCount[]).map((c) => ({
+    ...c,
+    room: rooms.get(c.session_id),
+  }));
+}
+
+/** Mapa session_id → sala, direto da tabela `sessions` (fonte da verdade). */
+export async function fetchSessionRooms(): Promise<Record<string, string>> {
+  const { data, error } = await supabaseAdmin().from("sessions").select("id, room");
   if (error) throw new Error(error.message);
-  return (data ?? []) as SessionCount[];
+  return Object.fromEntries((data ?? []).map((s) => [s.id, s.room]));
 }

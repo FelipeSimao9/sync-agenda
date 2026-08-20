@@ -21,21 +21,35 @@ export async function adminLogout() {
   redirect("/admin/login");
 }
 
-export type UpdateCapacityResult = { ok: true } | { ok: false; error: string };
+export type UpdateSessionResult = { ok: true } | { ok: false; error: string };
 
-export async function updateSessionCapacity(
+export async function updateSession(
   sessionId: string,
-  capacity: number,
-): Promise<UpdateCapacityResult> {
+  changes: { capacity?: number; room?: string },
+): Promise<UpdateSessionResult> {
   if (!(await isAdmin())) return { ok: false, error: "Não autorizado." };
-  const value = Math.floor(capacity);
-  if (!Number.isFinite(value) || value < 1) {
-    return { ok: false, error: "Capacidade precisa ser um número maior que zero." };
+
+  const patch: { capacity?: number; room?: string } = {};
+  if (changes.capacity !== undefined) {
+    const value = Math.floor(changes.capacity);
+    if (!Number.isFinite(value) || value < 1) {
+      return { ok: false, error: "Capacidade precisa ser um número maior que zero." };
+    }
+    patch.capacity = value;
   }
+  if (changes.room !== undefined) {
+    const room = changes.room.trim();
+    if (!room) return { ok: false, error: "O nome da sala não pode ficar vazio." };
+    patch.room = room;
+  }
+  if (Object.keys(patch).length === 0) {
+    return { ok: false, error: "Nada para salvar." };
+  }
+
   try {
     const { data, error } = await supabaseAdmin()
       .from("sessions")
-      .update({ capacity: value })
+      .update(patch)
       .eq("id", sessionId)
       .select("id");
     if (error) throw new Error(error.message);

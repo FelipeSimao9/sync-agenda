@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { AGENDA, blockById, type AgendaBlock } from "@/data/agenda";
 import { getParticipantEmail } from "@/lib/auth";
 import { buildIcs } from "@/lib/ics";
-import { supabaseAdmin } from "@/lib/supabase";
+import { fetchSessionRooms, supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -41,6 +41,15 @@ export async function GET(req: NextRequest) {
       blocks = AGENDA.filter((b) => b.type !== "track" || chosen.has(b.id));
     }
   }
+
+  // sala do banco tem prioridade sobre a da agenda estática
+  let rooms: Record<string, string> = {};
+  try {
+    rooms = await fetchSessionRooms();
+  } catch {
+    // sem banco: mantém as salas da agenda
+  }
+  blocks = blocks.map((b) => (rooms[b.id] ? { ...b, room: rooms[b.id] } : b));
 
   return new NextResponse(buildIcs(blocks), {
     headers: {

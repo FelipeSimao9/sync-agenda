@@ -83,10 +83,18 @@ type Props = {
   lastName: string;
   choice1: string | null;
   choice2: string | null;
+  rooms?: Record<string, string>; // session_id → sala, vindo do banco
   allowTimeOverride: boolean;
 };
 
-function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride }: Props) {
+function DiaAppInner({
+  firstName,
+  lastName,
+  choice1,
+  choice2,
+  rooms,
+  allowTimeOverride,
+}: Props) {
   const params = useSearchParams();
   const override = allowTimeOverride
     ? parseNowOverride(params.get("now"))
@@ -109,13 +117,22 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
   const touch = useRef<{ x: number; y: number } | null>(null);
 
   const state = getEventState(now);
+  // sala do banco tem prioridade sobre a da agenda estática
+  const applyRoom = useMemo(() => {
+    return (b: AgendaBlock): AgendaBlock =>
+      rooms?.[b.id] ? { ...b, room: rooms[b.id] } : b;
+  }, [rooms]);
   const effective = useMemo(
     () =>
       buildEffectiveAgenda({
         1: choice1 ? (blockById(choice1) ?? null) : null,
         2: choice2 ? (blockById(choice2) ?? null) : null,
-      }),
-    [choice1, choice2],
+      }).map((e) =>
+        e.kind === "block"
+          ? { ...e, block: applyRoom(e.block) }
+          : { ...e, options: e.options.map(applyRoom) },
+      ),
+    [choice1, choice2, applyRoom],
   );
   const registeredIds = useMemo(
     () => new Set([choice1, choice2].filter(Boolean) as string[]),
@@ -123,10 +140,10 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
   );
   const tickets = useMemo(
     () =>
-      [choice1, choice2]
+      ([choice1, choice2]
         .map((id) => (id ? blockById(id) : null))
-        .filter(Boolean) as AgendaBlock[],
-    [choice1, choice2],
+        .filter(Boolean) as AgendaBlock[]).map(applyRoom),
+    [choice1, choice2, applyRoom],
   );
 
   const bgIntensity =

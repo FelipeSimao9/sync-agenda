@@ -204,7 +204,7 @@ export const AGENDA: AgendaBlock[] = [
     end: "12:15",
     title: "Pitch Session — Seed + Pré-seed",
     shortTitle: "Pitch Session · Seed + Pré-seed",
-    room: "Sala Temaki",
+    room: "Sala Sonho Grande",
     capacity: 50,
     speakers: [],
     description:

@@ -138,15 +138,15 @@ export default function DirectionsModal({ open, onClose }: Props) {
                     href={app.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex flex-col items-center gap-1.5 rounded-[18px] py-3.5 font-bold transition-transform active:scale-95"
-                    style={{ backgroundColor: app.bg, color: app.fg }}
+                    aria-label={app.label}
+                    className="flex items-center justify-center rounded-[18px] py-4 transition-transform active:scale-95"
+                    style={{ backgroundColor: app.bg }}
                   >
                     <SafeImg
                       src={app.icon}
-                      alt=""
-                      className="h-6 w-6 object-contain"
+                      alt={app.label}
+                      className="h-7 w-16 object-contain"
                     />
-                    <span className="text-[13px]">{app.label}</span>
                   </a>
                 ))}
               </div>

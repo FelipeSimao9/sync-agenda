@@ -5,11 +5,10 @@ import {
   Accessibility,
   Car,
   CarTaxiFront,
-  Map,
   MapPin,
-  Navigation,
   TriangleAlert,
 } from "lucide-react";
+import { SafeImg } from "./ui";
 
 const ADDRESS = "Av. dos Autonomistas, 1496 — Vila Yara, Osasco/SP";
 const LAT = -23.5406754;
@@ -19,19 +18,25 @@ const PLACE_ID = "ChIJ7Z225lH_zpQRRqJ8pMprye8";
 const NAV_APPS = [
   {
     label: "Uber",
-    icon: CarTaxiFront,
+    icon: "/brand/uber.svg",
+    bg: "#FFFFFF",
+    fg: "#0C1015",
     href: `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${encodeURIComponent(
       `iFood - ${ADDRESS}`,
     )}&dropoff[latitude]=${LAT}&dropoff[longitude]=${LNG}`,
   },
   {
     label: "Waze",
-    icon: Navigation,
+    icon: "/brand/waze.svg",
+    bg: "#33CCFF",
+    fg: "#0C1015",
     href: `https://www.waze.com/ul?ll=${LAT}%2C${LNG}&navigate=yes&zoom=17`,
   },
   {
     label: "Maps",
-    icon: Map,
+    icon: "/brand/google-maps.svg",
+    bg: "#FFFFFF",
+    fg: "#0C1015",
     href: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
       `iFood - ${ADDRESS}`,
     )}&destination_place_id=${PLACE_ID}`,
@@ -133,9 +138,14 @@ export default function DirectionsModal({ open, onClose }: Props) {
                     href={app.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex flex-col items-center gap-1.5 rounded-[18px] bg-lime py-3.5 font-bold text-ink-deep transition-transform active:scale-95"
+                    className="flex flex-col items-center gap-1.5 rounded-[18px] py-3.5 font-bold transition-transform active:scale-95"
+                    style={{ backgroundColor: app.bg, color: app.fg }}
                   >
-                    <app.icon size={20} strokeWidth={1.75} />
+                    <SafeImg
+                      src={app.icon}
+                      alt=""
+                      className="h-6 w-6 object-contain"
+                    />
                     <span className="text-[13px]">{app.label}</span>
                   </a>
                 ))}

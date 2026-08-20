@@ -149,7 +149,14 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
 
   const agora = (() => {
     if (state === "live") {
-      return <NowScreen blocks={effective} nowMs={now} onOpen={setSheetBlock} />;
+      return (
+        <NowScreen
+          blocks={effective}
+          nowMs={now}
+          onOpen={setSheetBlock}
+          onDirections={() => setShowDirections(true)}
+        />
+      );
     }
     if (state === "pre-event") {
       const days = daysUntilEvent(now);

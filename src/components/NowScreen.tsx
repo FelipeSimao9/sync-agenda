@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
 import type { AgendaBlock } from "@/data/agenda";
 import {
   blockProgress,
@@ -211,10 +211,11 @@ type Props = {
   blocks: EffectiveBlock[];
   nowMs: number;
   onOpen: (block: AgendaBlock) => void;
+  onDirections: () => void;
 };
 
 /** Tela "Agora" no estado live: regra dos 50%, foco + secundário. */
-export default function NowScreen({ blocks, nowMs, onOpen }: Props) {
+export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props) {
   const focus = getNowFocus(blocks, nowMs);
   if (!focus) return null;
   const { focus: focusBlock, focusKind, secondary, secondaryKind } = focus;
@@ -225,8 +226,16 @@ export default function NowScreen({ blocks, nowMs, onOpen }: Props) {
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: EASE }}
-        className="flex shrink-0 justify-center pb-3"
+        className="relative flex shrink-0 items-center justify-center pb-3"
       >
+        <button
+          type="button"
+          onClick={onDirections}
+          aria-label="Como chegar"
+          className="absolute left-0 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-lime backdrop-blur-xl active:scale-95"
+        >
+          <Navigation size={16} strokeWidth={1.75} />
+        </button>
         <SyncLogo height={26} />
       </motion.div>
       <div className="min-h-0 flex-1">

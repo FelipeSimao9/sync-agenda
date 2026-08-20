@@ -3,7 +3,7 @@
 import { Suspense, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, ListOrdered, MapPin } from "lucide-react";
+import { CalendarDays, ListOrdered, MapPin, Navigation } from "lucide-react";
 import { blockById, type AgendaBlock, AGENDA } from "@/data/agenda";
 import {
   buildEffectiveAgenda,
@@ -20,6 +20,7 @@ import NowScreen from "./NowScreen";
 import TabBar, { TAB_ORDER, type Tab } from "./TabBar";
 import TicketsScreen from "./TicketsScreen";
 import ProgramWalkthrough from "./ProgramWalkthrough";
+import DirectionsModal from "./DirectionsModal";
 import { AnimNumber, EASE, PrimaryButton, SafeImg, SyncLogo } from "./ui";
 
 function EventPhoto() {
@@ -104,6 +105,7 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
     }));
   const [sheetBlock, setSheetBlock] = useState<AgendaBlock | null>(null);
   const [showProgram, setShowProgram] = useState(false);
+  const [showDirections, setShowDirections] = useState(false);
   const touch = useRef<{ x: number; y: number } | null>(null);
 
   const state = getEventState(now);
@@ -179,18 +181,31 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
               )}
             </motion.h1>
           </div>
-          <motion.button
-            type="button"
+          <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: EASE, delay: 0.35 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => setShowProgram(true)}
-            className="flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-7 text-[15px] font-semibold text-cream backdrop-blur-xl"
+            className="flex flex-wrap items-center justify-center gap-3"
           >
-            <ListOrdered size={17} strokeWidth={1.75} className="text-lime" />
-            Ver programação
-          </motion.button>
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setShowProgram(true)}
+              className="flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-6 text-[15px] font-semibold text-cream backdrop-blur-xl"
+            >
+              <ListOrdered size={17} strokeWidth={1.75} className="text-lime" />
+              Ver programação
+            </motion.button>
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setShowDirections(true)}
+              className="flex h-[48px] items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-6 text-[15px] font-semibold text-cream backdrop-blur-xl"
+            >
+              <Navigation size={17} strokeWidth={1.75} className="text-lime" />
+              Como chegar
+            </motion.button>
+          </motion.div>
         </div>
       );
     }
@@ -325,6 +340,11 @@ function DiaAppInner({ firstName, lastName, choice1, choice2, allowTimeOverride 
           />
         )}
       </AnimatePresence>
+
+      <DirectionsModal
+        open={showDirections}
+        onClose={() => setShowDirections(false)}
+      />
 
       <BlockSheet
         block={sheetBlock}

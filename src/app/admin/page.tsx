@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/auth";
-import { supabaseAdmin } from "@/lib/supabase";
+import { fetchSessionCounts, supabaseAdmin, type SessionCount } from "@/lib/supabase";
 import { tracksForSlot, SLOT_TIMES } from "@/data/agenda";
 import AutoRefresh from "./AutoRefresh";
+import CapacityEditor from "./CapacityEditor";
 import { adminLogout } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +22,7 @@ type Registration = {
 };
 
 function Bar({ registered, capacity }: { registered: number; capacity: number }) {
-  const pct = Math.min(100, (registered / capacity) * 100);
+  const pct = capacity > 0 ? Math.min(100, (registered / capacity) * 100) : 0;
   const color =
     registered >= capacity
       ? "bg-[#e07a5f]"
@@ -40,23 +41,29 @@ export default async function AdminPage() {
 
   let participants: Participant[] = [];
   let registrations: Registration[] = [];
+  let sessionCounts: SessionCount[] = [];
   let dbError: string | null = null;
   try {
     const supabase = supabaseAdmin();
-    const [p, r] = await Promise.all([
+    const [p, r, counts] = await Promise.all([
       supabase
         .from("participants")
         .select("email, first_name, last_name, accessibility_needs"),
       supabase.from("registrations").select("email, session_id, slot, created_at"),
+      fetchSessionCounts(),
     ]);
     if (p.error) throw new Error(p.error.message);
     if (r.error) throw new Error(r.error.message);
     participants = p.data ?? [];
     registrations = r.data ?? [];
+    sessionCounts = counts;
   } catch (e) {
     dbError = e instanceof Error ? e.message : "erro desconhecido";
   }
 
+  const capacityBySession = new Map(
+    sessionCounts.map((c) => [c.session_id, c.capacity]),
+  );
   const byEmail = new Map(participants.map((p) => [p.email, p]));
   const bySession = new Map<string, Registration[]>();
   for (const r of registrations) {
@@ -133,7 +140,7 @@ export default async function AdminPage() {
               const regs = (bySession.get(t.id) ?? []).sort((a, b) =>
                 fullName(a.email).localeCompare(fullName(b.email), "pt-BR"),
               );
-              const capacity = t.capacity ?? 0;
+              const capacity = capacityBySession.get(t.id);
               return (
                 <div
                   key={t.id}
@@ -147,12 +154,23 @@ export default async function AdminPage() {
                       <p className="text-[13px] text-mist">{t.room}</p>
                     </div>
                     <p className="tabular text-[15px] font-semibold text-cream">
-                      {regs.length}/{capacity}
+                      {regs.length}/{capacity ?? "—"}
                     </p>
                   </div>
                   <div className="mt-3">
-                    <Bar registered={regs.length} capacity={capacity} />
+                    <Bar registered={regs.length} capacity={capacity ?? 0} />
                   </div>
+                  {capacity !== undefined ? (
+                    <CapacityEditor
+                      sessionId={t.id}
+                      capacity={capacity}
+                      registered={regs.length}
+                    />
+                  ) : (
+                    <p className="mt-3 text-[12px] text-[#f2a68a]">
+                      Sessão não encontrada no banco — rode o seed.
+                    </p>
+                  )}
                   <div className="mt-3 flex items-center gap-3">
                     <a
                       href={`/admin/export?session=${t.id}`}

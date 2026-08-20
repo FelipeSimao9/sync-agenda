@@ -54,10 +54,11 @@ export async function getCounts(): Promise<CountsMap> {
       };
     }
   } catch {
-    // sem banco (dev), degrade para "tudo disponível"
+    // sem banco (dev), degrade para "tudo disponível" com capacidade fictícia
+    const DEV_CAPACITY = 100;
     for (const slot of [1, 2] as const) {
       for (const t of tracksForSlot(slot)) {
-        map[t.id] = { registered: 0, remaining: t.capacity ?? 0, capacity: t.capacity ?? 0 };
+        map[t.id] = { registered: 0, remaining: DEV_CAPACITY, capacity: DEV_CAPACITY };
       }
     }
   }

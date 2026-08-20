@@ -59,15 +59,16 @@ function SymbolHeader() {
 type Props = {
   block: AgendaBlock;
   registered: number;
+  capacity?: number; // vem do banco via /api/counts; undefined enquanto carrega
   selected: boolean;
   onSelect: () => void;
 };
 
-export default function TrackCard({ block, registered, selected, onSelect }: Props) {
+export default function TrackCard({ block, registered, capacity, selected, onSelect }: Props) {
   const panelists = block.speakers.filter((s) => !s.isModerator);
-  const capacity = block.capacity ?? 0;
-  const remaining = Math.max(0, capacity - registered);
-  const full = remaining <= 0;
+  const loaded = capacity !== undefined;
+  const remaining = loaded ? Math.max(0, capacity - registered) : 0;
+  const full = loaded && remaining <= 0;
 
   return (
     <motion.button
@@ -119,7 +120,9 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
           </div>
           <div className="mt-2 flex items-center justify-between text-[12px] text-mist">
             <span>
-              {full ? (
+              {!loaded ? (
+                "Carregando vagas…"
+              ) : full ? (
                 "Sem vagas"
               ) : (
                 <>
@@ -131,7 +134,9 @@ export default function TrackCard({ block, registered, selected, onSelect }: Pro
           <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-white/10">
             <motion.div
               className="h-full rounded-full bg-lime"
-              animate={{ width: `${Math.min(100, (registered / capacity) * 100)}%` }}
+              animate={{
+                width: loaded && capacity > 0 ? `${Math.min(100, (registered / capacity) * 100)}%` : "0%",
+              }}
               transition={{ duration: 0.4 }}
             />
           </div>

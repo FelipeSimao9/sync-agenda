@@ -77,6 +77,7 @@ function SlotScreen({
             <TrackCard
               block={t}
               registered={counts[t.id]?.registered ?? 0}
+              capacity={counts[t.id]?.capacity}
               selected={selected === t.id}
               onSelect={() => onSelect(t.id)}
             />

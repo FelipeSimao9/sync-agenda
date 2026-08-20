@@ -17,7 +17,6 @@ export type AgendaBlock = {
   shortTitle?: string;
   subtitle?: string;
   room: string;
-  capacity?: number;
   speakers: Speaker[];
   mediatedBy?: string;
   description?: string;
@@ -136,7 +135,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "De onde vêm os grandes empreendedores? O poder dos ecossistemas",
     shortTitle: "Ecossistemas",
     room: "Sala Arroz Integral",
-    capacity: 60,
     speakers: [
       {
         name: "Rodrigo Terron",
@@ -163,7 +161,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "Construindo produtos na era da AI",
     shortTitle: "Produtos e AI",
     room: "Sala Guacamole",
-    capacity: 70,
     speakers: [
       { name: "Jose", company: "Valor Capital", photo: "/speakers/jose-noblecilla.png", linkedin: "https://www.linkedin.com/in/josemnb/" },
       {
@@ -192,7 +189,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "Pitch Session — MVP",
     shortTitle: "Pitch Session · MVP",
     room: "Sala Feijoada",
-    capacity: 43,
     speakers: [],
     description:
       "Startups em estágio de MVP apresentam seus pitches para a banca.",
@@ -206,7 +202,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "Pitch Session — Seed + Pré-seed",
     shortTitle: "Pitch Session · Seed + Pré-seed",
     room: "Sala Sonho Grande",
-    capacity: 50,
     speakers: [],
     description:
       "Startups em estágio de seed e pré-seed apresentam seus pitches para a banca.",
@@ -284,7 +279,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "Construindo fintech no Brasil",
     shortTitle: "Fintech",
     room: "Sala Sonho Grande",
-    capacity: 40,
     mediatedBy: "Monashees",
     speakers: [
       { name: "Petrus", company: "NG Cash", photo: "/speakers/petrus-arruda.png", linkedin: "https://www.linkedin.com/in/petrusarruda/" },
@@ -320,7 +314,6 @@ export const AGENDA: AgendaBlock[] = [
     title: "O dia a dia de uma startup early stage",
     shortTitle: "Early Stage",
     room: "Sala Arroz Integral",
-    capacity: 60,
     speakers: [
       { name: "Pedro", company: "Vereda", photo: "/speakers/pedro-galindo.png", linkedin: "https://www.linkedin.com/in/pedro-galindo-022a41197/" },
       { name: "Flavio", company: "Revert", photo: "/speakers/flavio-terni.png", linkedin: "https://www.linkedin.com/in/flavioterni/" },

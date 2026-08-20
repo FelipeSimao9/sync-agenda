@@ -48,14 +48,13 @@ export default function SpeakerModal({
     <AnimatePresence>
       {speaker && (
         <>
-          <motion.div
+          {/* sem fade: animar opacidade de uma camada de tela cheia sobre os
+              blurs do fundo força repaint por frame no Safari (abertura lenta) */}
+          <div
             key="backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
             onClick={onClose}
             className="fixed inset-0 z-[60] bg-ink-deep/75"
+            style={{ transform: "translateZ(0)" }}
           />
           <div className="pointer-events-none fixed inset-0 z-[60] flex items-center justify-center px-8">
             <motion.div
@@ -63,9 +62,12 @@ export default function SpeakerModal({
               initial={{ opacity: 0, scale: 0.92, y: 14 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 10 }}
-              transition={{ duration: 0.22, ease: EASE }}
+              transition={{ duration: 0.18, ease: EASE }}
               className="pointer-events-auto relative w-full max-w-[320px] rounded-[28px] border border-white/10 bg-ink px-6 pb-6 pt-8 text-center"
-              style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.55)" }}
+              style={{
+                boxShadow: "0 24px 80px rgba(0,0,0,0.55)",
+                willChange: "transform, opacity",
+              }}
             >
               <button
                 type="button"

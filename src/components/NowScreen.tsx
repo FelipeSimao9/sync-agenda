@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import type { AgendaBlock } from "@/data/agenda";
@@ -216,6 +217,17 @@ type Props = {
 
 /** Tela "Agora" no estado live: regra dos 50%, foco + secundário. */
 export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props) {
+  // "Como chegar?" por extenso até o primeiro clique; depois, só o ícone
+  const [directionsSeen, setDirectionsSeen] = useState(true);
+  useEffect(() => {
+    setDirectionsSeen(localStorage.getItem("sync_directions_seen") === "1");
+  }, []);
+  function openDirections() {
+    localStorage.setItem("sync_directions_seen", "1");
+    setDirectionsSeen(true);
+    onDirections();
+  }
+
   const focus = getNowFocus(blocks, nowMs);
   if (!focus) return null;
   const { focus: focusBlock, focusKind, secondary, secondaryKind } = focus;
@@ -228,14 +240,21 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
         transition={{ duration: 0.4, ease: EASE }}
         className="relative flex shrink-0 items-center justify-center pb-3"
       >
-        <button
+        <motion.button
+          layout
           type="button"
-          onClick={onDirections}
+          onClick={openDirections}
           aria-label="Como chegar"
-          className="absolute left-0 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-lime backdrop-blur-xl active:scale-95"
+          className="absolute left-0 flex h-9 items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] text-lime backdrop-blur-xl active:scale-95"
+          style={{ paddingLeft: directionsSeen ? 0 : 12, paddingRight: directionsSeen ? 0 : 12, width: directionsSeen ? 36 : undefined }}
         >
-          <Navigation size={16} strokeWidth={1.75} />
-        </button>
+          <Navigation size={16} strokeWidth={1.75} className="shrink-0" />
+          {!directionsSeen && (
+            <span className="whitespace-nowrap text-[12px] font-semibold text-cream">
+              Como chegar?
+            </span>
+          )}
+        </motion.button>
         <SyncLogo height={26} />
       </motion.div>
       <div className="min-h-0 flex-1">

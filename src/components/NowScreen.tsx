@@ -247,21 +247,31 @@ export default function NowScreen({ blocks, nowMs, onOpen, onDirections }: Props
         transition={{ duration: 0.4, ease: EASE }}
         className="relative flex shrink-0 items-center justify-center pb-3"
       >
-        <motion.button
-          layout
+        <button
           type="button"
           onClick={openDirections}
           aria-label="Como chegar"
-          className="absolute left-0 flex h-9 items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] text-lime backdrop-blur-xl active:scale-95"
-          style={{ paddingLeft: directionsSeen ? 0 : 12, paddingRight: directionsSeen ? 0 : 12, width: directionsSeen ? 36 : undefined }}
+          className="absolute left-0 flex h-9 items-center overflow-hidden rounded-full border border-white/15 bg-white/[0.06] text-lime backdrop-blur-xl active:scale-95"
         >
-          <Navigation size={16} strokeWidth={1.75} className="shrink-0" />
-          {!directionsSeen && (
-            <span className="whitespace-nowrap text-[12px] font-semibold text-cream">
-              Como chegar?
-            </span>
-          )}
-        </motion.button>
+          {/* caixa fixa do ícone: nunca estica durante a transição */}
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center">
+            <Navigation size={15} strokeWidth={1.75} />
+          </span>
+          <AnimatePresence initial={false}>
+            {!directionsSeen && (
+              <motion.span
+                initial={{ width: "auto", opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.28, ease: EASE }}
+                className="overflow-hidden whitespace-nowrap"
+              >
+                <span className="pr-3 text-[11px] font-semibold text-cream">
+                  Como chegar?
+                </span>
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
         <SyncLogo height={26} />
       </motion.div>
       <div className="min-h-0 flex-1">
